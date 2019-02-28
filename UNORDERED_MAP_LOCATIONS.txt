@@ -1,0 +1,123 @@
+LOCATAIONS OF UNORDERED_MAP<T> IN NEMO STATIC LIB
+TO BE REPLACED WITH HASH_MAP<T>
+FOUND WITH NETBEANS IDE 8.2 64-BIT "FIND IN PROJECT" FEATURE
+
+Created 2/28/2019
+
+Found 60 matches of unordered_map in 15 files.	
+Graph.h	
+	INCLUSIONS:
+			#include <unordered_map> // Like a hash_map. It should be compiled with -std=c++11 option.       [position 29:11]	
+			using std::unordered_map;      [position 30:12]	
+    	DECLARATIONS: 	
+			unordered_map <string, vertex>& getNametoIndex();      [position 74:5]	
+    			unordered_map<vertex, string> getIndextoName(); // will be useful if need to match the index to name      [position 75:5]
+			unordered_map<string, vertex> name2Index;      [position 106:5]	
+			unordered_map < edge, edgetype > edges; // added by following the original ESU program      [position 108:2]
+	USAGE:
+   			unordered_map < edge, edgetype > getEdges();; // added by following the original ESU program      [position 76:4]	
+    			vertex getOrCreateIndex(string, unordered_map<string, vertex>&);      [position 102:37]	
+    		
+NautyLink.h
+	INCLUSIONS:	
+			#include <unordered_map> // Like a hash_map. It should be compiled with -std=c++11 option.       [position 31:11]	
+			using std::unordered_map;      [position 32:12]
+	DECLARATIONS:
+    			unordered_map<edge, edgetype> edges; // get the edges when initialize it          [position 74:5]
+	USAGE:	
+    			NautyLink(int, unordered_map<edge, edgetype>);      [position 49:20]	
+     			NautyLink(int, unordered_map<edge, edgetype>, bool);      [position 50:21]	
+	
+RandESU.h	
+	//using std::unordered_map;      [position 43:14]
+	
+RandomGraphAnalysis.h	
+	USAGE:
+    			static unordered_map<graph64, vector<double>> analyze(Graph&, int, int, const vector<double>&);        [position 36:12]
+	
+StatisticalAnalysis.h	
+	DECLARATIONS:	
+    			unordered_map<graph64, double> getZScores();      [position 39:5]	
+    			unordered_map<graph64, double> getPValues();      [position 42:5]	
+    			unordered_map<graph64, double> targetGraphRelFreqs;      [position 48:5]	
+    			unordered_map<graph64, vector<double>> randomGraphRelFreqs;      [position 49:5]
+	USAGE:
+    			StatisticalAnalysis(unordered_map<graph64, double>&, unordered_map<graph64, vector<double>>& ,int);      [position 36:25]	
+    			StatisticalAnalysis(unordered_map<graph64, double>&, unordered_map<graph64, vector<double>>& ,int);      [position 36:58]
+	
+SubgraphCount.h	
+	USAGE:
+    			unordered_map <graph64, double> getRelativeFrequencies();          [position 41:5]	
+    			unordered_map <graph64, uint64> getlabeFreqMap();        [position 43:5]	
+    			unordered_map<graph64, uint64> labelFreqMap;       [position 50:5]	
+
+SubgraphEnumerationResult.h
+	INCLUSIONS:	
+			#include <unordered_map>      [position 25:11]	
+			using std::unordered_map;       [position 26:12]
+	USAGE:	
+    			virtual unordered_map <graph64, double> getRelativeFrequencies()=0;      [position 47:13]
+	
+SubgraphProfile.h
+	DECLARATIONS:
+		    	unordered_map<graph64, vector<uint64>> labelVertexFreqMapMap;      [position 40:5]
+	USAGE:	
+    			unordered_map <graph64, double> getRelativeFrequencies();      [position 30:5]	
+    			unordered_map<graph64, vector<uint64>> getlabelVertexFreqMapMap();      [position 31:5]	
+    			unordered_map<graph64, uint64> getlabelFreqMap(int); //need subgraphsize to calculate frequency      [position 32:5]		
+
+Graph.cpp	
+	DECLARATIONS:
+    			unordered_map<string, vertex> nameToIndex;      [position 43:5]	
+			unordered_map<vertex, string> Index2name;      [position 135:5]	
+    			unordered_map<string, vertex> nameToIndex;      [position 149:5]
+    			unordered_map<string, vertex> vertexMap = graph.name2Index;      [position 229:5]
+	USAGE:
+ 			unordered_map < edge, edgetype > Graph::getEdges(){      [position 116:2]	
+			unordered_map<string, vertex>& Graph::getNametoIndex(){      [position 127:1]	
+			unordered_map<vertex, string> Graph::getIndextoName() {      [position 133:1]		
+			vertex Graph::getOrCreateIndex(string nodeName, unordered_map<string,vertex>& nameToIndex){      [position 208:49]		
+
+NautyLink.cpp	
+	USAGE:
+			NautyLink::NautyLink(int subgraphsize, unordered_map<edge, edgetype> edgeset):NautyLink(subgraphsize, edgeset, false)  {      [position 16:40]	
+			NautyLink::NautyLink(int subgraphsize, unordered_map<edge, edgetype> edgeset, bool dir) {      [position 20:40]	
+
+RandomGraphAnalysis.cpp
+	DECLARATIONS:
+    			unordered_map<graph64, vector<double>> labelRelFreqsMap;      [position 46:5]
+	USAGE:	
+			unordered_map <graph64, vector<double>> RandomGraphAnalysis::analyze(Graph& targetGraph, int randomGraphCount, int subgraphSize, const vector<double>& probs) {      [position 41:1]	
+			unordered_map<graph64, double> curLabelRelFreqMap = subgraphCount.getRelativeFrequencies();      [position 56:9]
+	
+StatisticalAnalysis.cpp
+	DECLARATIONS:
+			unordered_map<graph64, double>  pValues;      [position 86:5]
+		    	unordered_map<graph64, double> zScores;      [position 38:5]
+			unordered_map<graph64, vector<double>>& randomGraphRelFreqsMap,      [position 30:9]
+	USAGE:	
+			StatisticalAnalysis::StatisticalAnalysis(unordered_map<graph64, double>& targetGraphRelFreqsMap,      [position 29:42]		
+			unordered_map<graph64, double> StatisticalAnalysis::getZScores() {      [position 37:1]		
+			unordered_map<graph64, double> StatisticalAnalysis::getPValues() {      [position 85:1]	
+	
+
+SubgraphCount.cpp
+	DECLARATIONS:
+			unordered_map<graph64, double> result_map;      [position 56:5]	
+	USAGE:
+			unordered_map<graph64, uint64> SubgraphCount::getlabeFreqMap(){      [position 47:1]	
+			unordered_map <graph64, double> SubgraphCount::getRelativeFrequencies(){      [position 54:1]	
+	
+SubgraphProfile.cpp	
+	DECLARATIONS:
+     			unordered_map <graph64, uint64> labelFreqMap;      [position 64:6]
+     			unordered_map<graph64, double> result;      [position 78:6]
+	USAGE:
+ 			unordered_map<graph64, vector<uint64>> SubgraphProfile::getlabelVertexFreqMapMap(){      [position 59:2]	
+ 			unordered_map<graph64, uint64> SubgraphProfile::getlabelFreqMap(int subgraphsize){      [position 63:2]		
+ 			unordered_map <graph64, double> SubgraphProfile::getRelativeFrequencies(){      [position 76:2]	
+	
+cpp_standard_headers_indexer.cpp	
+	#include <unordered_map>    // (since C++11) 	std::unordered_map and std::unordered_multimap unordered associative containers      [position 108:11]	
+	#include <unordered_map>    // (since C++11) 	std::unordered_map and std::unordered_multimap unordered associative containers      [position 108:52]	
+	
