@@ -103,7 +103,7 @@ public:
 
 	//Modifiers
 	//used in SubgraphCount.cpp as type 6
-	void insert(initializer_list<key, Value>) { size++; };
+	void insert(std::pair<key, Value>) { size++; };
 	//emplace
 	//emplace_hint
 	//erase - only used in std:vector
