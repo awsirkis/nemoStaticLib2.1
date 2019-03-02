@@ -19,46 +19,46 @@ template <class key, class Value> class HASH_MAP
 	int _bucket_count = 100;
 	int array_size = 0;
 
-	struct HASH_NODE {
+	template <class key, class Value> struct HASH_NODE {
 		key KEY;
 		Value VALUE;
-		HASH_NODE(key k, Value v) {
+		HASH_NODE<key, Value>() {
+		}
+		HASH_NODE<key, Value>(key k, Value v) {
 			KEY = k;
 			VALUE = v;
 		}
-		~HASH_NODE() {
-			delete KEY;
-			delete VALUE;
+		~HASH_NODE<key, Value>() {
 		}
 		HASH_NODE operator=(const HASH_NODE& H) {
 			KEY = H.KEY;
 			VALUE = H.VALUE;
 		}
 	};
-	HASH_NODE* buckets;
-	//const std::type_info& key_type = typeid(key);
-	//const std::type_info& mapped_type = typeid(Value);
-	//const std::type_info& value_type = pair < key_type, mapped_type> ;
+	HASH_NODE<key, Value>* buckets;
+	const std::type_info& key_type = typeid(key);
+	const std::type_info& mapped_type = typeid(Value);
+	//const std::type_info& value_type = std::pair < key_type, mapped_type> ;
 	std::hash<key> hasher;
 public:
-	HASH_MAP() { 
-		buckets = new HASH_NODE[bucket_count]; 
+	HASH_MAP<key, Value>() {
+		buckets = new HASH_NODE<key, Value>[_bucket_count];
 	};
-	~HASH_MAP() { 
+	~HASH_MAP<key, Value>() {
 		delete[] buckets; 
 	};
 	HASH_MAP(const HASH_MAP&H) { 
 		delete[] buckets;
-		buckets = new HASH_NODE[H.bucket_count];
+		buckets = new HASH_NODE<key, Value>[H.bucket_count];
 		for (int i = 0; i < _bucket_count; i++) {
-			buckets[i] = new HASH_NODE(H.buckets[i].KEY, H.buckets[i].VALUE);
+			buckets[i] = new HASH_NODE<key, Value>(H.buckets[i].KEY, H.buckets[i].VALUE);
 		}
 	};
 	HASH_MAP operator=(const HASH_MAP& H) {
 		delete[] buckets;
-		buckets = new HASH_NODE[H.bucket_count];
+		buckets = new HASH_NODE<key, Value>[H.bucket_count];
 		for (int i = 0; i < _bucket_count; i++) {
-			buckets[i] = new HASH_NODE(H.buckets[i].KEY, H.buckets[i].VALUE);
+			buckets[i] = new HASH_NODE<key, Value>(H.buckets[i].KEY, H.buckets[i].VALUE);
 		}
 	};
 
