@@ -14,12 +14,11 @@
 #endif
 #endif
 #define _max_bucket_count 10000
-#include <iostream>
 template <class key, class Value> class HASH_MAP
 {
 	int _bucket_count = 100;
 	int array_size = 0;
-	float _max_load_factor = 0.01;
+	const float _max_load_factor = 0.75;
 
 	template <class key, class Value> struct HASH_NODE {
 	public:
@@ -31,7 +30,10 @@ template <class key, class Value> class HASH_MAP
 			first = k;
 			second = v;
 		}
+		//reset node to null values, deallocating increased values 
 		~HASH_NODE<key, Value>() {
+			first = key();
+			second = Value();
 		}
 		HASH_NODE<key, Value> operator=(const HASH_NODE& H) {
 			first = H.first;
@@ -47,9 +49,10 @@ public:
 		buckets = new HASH_NODE<key, Value>[_bucket_count];
 	};
 	~HASH_MAP<key, Value>() {
-		delete buckets;
+		delete[] buckets;
 	};
 	HASH_MAP<key, Value>(const HASH_MAP<key, Value>&H) {
+		
 		HASH_NODE<key, Value>* temp = new HASH_NODE<key, Value>[H._bucket_count];
 		auto i = H.begin(), t_start = &temp[0], t = t_start;
 		for (int j = 0; i < end() && j < H._bucket_count; j++, i++) {
@@ -180,7 +183,7 @@ public:
 			}
 		}
 		swap(temp, buckets); // swap addresses
-		//delete temp;
+		delete[] temp;
 	};
 
 	//Observers - Unused
