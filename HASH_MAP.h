@@ -14,46 +14,47 @@
 #endif
 #endif
 #define _max_bucket_count 10000
+#define _max_load_factor 0.75
 template <class key, class Value> class HASH_MAP
 {
 	int _bucket_count = 100;
 	int array_size = 0;
-	const float _max_load_factor = 0.75;
 
-	template <class key, class Value> struct HASH_NODE {
+	struct HASH_NODE {
 	public:
 		key first = key();
 		Value second = Value();
-		HASH_NODE<key, Value>() {
+		HASH_NODE() {
 		}
-		HASH_NODE<key, Value>(key k, Value v) {
+		HASH_NODE(key k, Value v) {
 			first = k;
 			second = v;
 		}
 		//reset node to null values, deallocating increased values 
-		~HASH_NODE<key, Value>() {
+		~HASH_NODE() {
 			first = key();
 			second = Value();
 		}
-		HASH_NODE<key, Value> operator=(const HASH_NODE& H) {
+		HASH_NODE operator=(const HASH_NODE& H) {
 			first = H.first;
 			second = H.second;
 		}
 	};
-	HASH_NODE<key, Value>* buckets;
+	HASH_NODE* buckets;
 	const std::type_info& key_type = typeid(key);
 	const std::type_info& mapped_type = typeid(Value);
 	//const std::type_info& value_type = std::pair < key_type, mapped_type> ;
 public:
 	HASH_MAP<key, Value>() {
-		buckets = new HASH_NODE<key, Value>[_bucket_count];
+		buckets = new HASH_NODE[_bucket_count];
 	};
 	~HASH_MAP<key, Value>() {
 		delete[] buckets;
 	};
 	HASH_MAP<key, Value>(const HASH_MAP<key, Value>&H) {
-		
-		HASH_NODE<key, Value>* temp = new HASH_NODE<key, Value>[H._bucket_count];
+		_bucket_count = H._bucket_count;
+		array_size = H.array_size;
+		HASH_NODE* temp = new HASH_NODE[H._bucket_count];
 		auto i = H.begin(), t_start = &temp[0], t = t_start;
 		for (int j = 0; i < end() && j < H._bucket_count; j++, i++) {
 			if (i->first != key()) {
@@ -66,7 +67,9 @@ public:
 		delete temp;
 	};
 	HASH_MAP<key, Value> operator=(const HASH_MAP<key, Value>& H) {
-		HASH_NODE<key, Value>* temp = new HASH_NODE<key, Value>[H._bucket_count];
+		_bucket_count = H._bucket_count;
+		array_size = H.array_size;
+		HASH_NODE* temp = new HASH_NODE[H._bucket_count];
 		auto i = H.begin(), t_start = &temp[0], t = t_start;
 		for (int j = 0; i < end() && j < H._bucket_count; j++, i++) {
 			if (i->first != key()) {
@@ -103,10 +106,10 @@ public:
 	//
 	// Start from the expected value that we would find a value with key at
 	// go forward until we find it or we find an empty cell with the default key
-	int count(const key& k) const {
+	int count(const key& k) const{
 		int found = 0;
 		int start = getStart(k);
-		auto ptr = begin() + start;
+		HASH_NODE* ptr = begin() + start;
 		for (ptr; ptr < end(); ptr++) {
 			if (ptr->first == key()) {
 				return found;
@@ -173,7 +176,7 @@ public:
 	};
 	// reserve - unused in NemoStaticLib
 	void rehash() {
-		HASH_NODE<key, Value>* temp = new HASH_NODE<key, Value>[_bucket_count *= 2];
+		HASH_NODE* temp = new HASH_NODE[_bucket_count *= 2];
 		auto i = begin(), t_start = &temp[0], t = t_start;
 		for (int j = 0; i < end() && j < _bucket_count/2; j++, i++) {
 			if (i->first != key()) {
@@ -193,5 +196,12 @@ public:
 	inline int getStart(const key& k) const noexcept {
 		return std::hash<key>{}(k) % _bucket_count;
 	};
+	void swap(HASH_NODE* h1, HASH_NODE* h2) {
+		HASH_NODE* temp = h1;
+		h1 = h2;
+		h2 = temp;
+	};
 };
+
+
 #endif
