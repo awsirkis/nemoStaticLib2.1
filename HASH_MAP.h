@@ -1,5 +1,6 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
+
 #if defined(__has_include)
 #if __has_include(<functional>)
 #include <functional>
@@ -7,10 +8,10 @@
 #endif
 #define _max_bucket_count 1000000
 #define _max_load_factor 0.75
-
+#include <iostream>
 template <class key, class Value> class HASH_MAP
 {
-	int _bucket_count = 100;
+	int _bucket_count = 10;
 	int array_size = 0;
 public:
 	struct HASH_NODE {
@@ -31,13 +32,14 @@ public:
 		HASH_NODE operator=(const HASH_NODE& H) {
 			first = H.first;
 			second = H.second;
+			return *this;
 		}
 	};
 private:
 	HASH_NODE* buckets;
 public:
 	HASH_MAP<key, Value>() {
-		buckets = new HASH_NODE[_bucket_count];
+		buckets = new HASH_NODE[_bucket_count + 1];
 	};
 	~HASH_MAP<key, Value>() {
 		delete[] buckets;
@@ -45,7 +47,7 @@ public:
 	HASH_MAP<key, Value>(const HASH_MAP<key, Value>&H) {
 		_bucket_count = H._bucket_count;
 		array_size = H.array_size;
-		HASH_NODE* temp = new HASH_NODE[H._bucket_count];
+		HASH_NODE* temp = new HASH_NODE[H._bucket_count + 1];
 		auto i = H.begin(), t_start = &temp[0], t = t_start;
 		for (int j = 0; i < end() && j < H._bucket_count; j++, i++) {
 			if (i->first != key()) {
@@ -60,7 +62,7 @@ public:
 	HASH_MAP<key, Value> operator=(const HASH_MAP<key, Value>& H) {
 		_bucket_count = H._bucket_count;
 		array_size = H.array_size;
-		HASH_NODE* temp = new HASH_NODE[H._bucket_count];
+		HASH_NODE* temp = new HASH_NODE[H._bucket_count + 1];
 		auto i = H.begin(), t_start = &temp[0], t = t_start;
 		for (int j = 0; i < end() && j < H._bucket_count; j++, i++) {
 			if (i->first != key()) {
@@ -81,16 +83,37 @@ public:
 
 	// Access Functions
 	Value& operator[](const key& k) const noexcept {
-		return (begin() + getStart(k))->second;
+		for(auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+			if(ptr->first == k)
+				return ptr->second;
+		Value v = Value();
+		Value& vp = v;
+		return v;
 	};
 	Value& operator[](key&& k) const noexcept {
-		return (begin() + getStart(k))->second;
+		for (auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+			if (ptr->first == k)
+				return ptr->second;
+		Value v = Value();
+		Value& vp = v;
+		return v;
 	};
 	Value& at(const key& k) const noexcept {
-		return (begin() + getStart(k))->second;
+		for (auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+			if (ptr->first == k)
+				return ptr->second;
+		Value v = Value();
+		Value& vp = v;
+		return v;
 	};
 	Value& at(key&& k) const noexcept {
-		return (begin() + getStart(k))->second;
+		Value v = Value();
+		for (auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+			if (ptr->first == k)
+				return ptr->second;
+		Value v = Value();
+		Value& vp = v;
+		return v;
 	};
 	//iterator find(const key&) const; // UNNECESSARY FOR NEMOSTATICLIB
 	// Graph.cpp - getOrCreateIndex()
@@ -100,13 +123,18 @@ public:
 	int count(const key& k) const noexcept {
 		int found = 0;
 		int start = getStart(k);
-		HASH_NODE* ptr = begin() + start;
+		auto ptr = begin() + start;
+		count_loop:
 		for (ptr; ptr < end(); ptr++) {
 			if (ptr->first == key()) {
 				return found;
 			}
-			if (ptr->first == k) {
+			else if (ptr->first == k) {
 				found++;
+			}
+			if (ptr == end()) {
+				ptr = begin();
+				goto count_loop;
 			}
 		}
 		return found;
@@ -133,28 +161,27 @@ public:
 			return;
 		array_size++;
 		int start = getStart(p.first);
+		
 		auto ptr = begin() + start;
+		insert_loop:
 		for (ptr; ptr < end(); ptr++) {
-			// if ptr reaches the end, prevents recursion
-			if (ptr == end() - 1) {
-				insert(p);
-			}
+			// if ptr reaches the end, go to the beginning
 			if (ptr->first == key()) {
 				ptr->first = p.first;
 				ptr->second = p.second;
 				break;
 			}
 		}
-		// if the load factor is too high or it is overflowing
+		if (ptr == end()) {
+			ptr = begin();
+			goto insert_loop;
+		}
+		// if the load factor is too high
 		if (load_factor() > max_load_factor()) {
 			rehash();
 		}
+		int z = 0;
 	};
-	//emplace
-	//emplace_hint
-	//erase - only used in std:vector
-	//clear
-	//swap
 
 	//Buckets
 	inline size_t bucket_count() const noexcept {
@@ -175,28 +202,45 @@ public:
 		if (_bucket_count * 2 < _max_bucket_count) {
 			_bucket_count *= 2;
 		}
-		else
+		else if (_bucket_count < _max_bucket_count) {
 			_bucket_count = _max_bucket_count;
-		HASH_NODE* temp = new HASH_NODE[_bucket_count *= 2];
-		auto i = begin(), t_start = &temp[0], t = t_start;
-		for (int j = 0; i < end() && j < _bucket_count / 2; j++, i++) {
+		}
+		else {
+			std::cerr << "<<<<ERROR: MEMORY OVERFLOW, OVER 1,000,000 ELEMENTS INSERTED>>>>" << std::endl;
+		}
+		HASH_NODE* temp = new HASH_NODE[_bucket_count + 1];
+		auto t_start = &temp[0], t_end = &temp[_bucket_count];
+
+		auto END = begin() + (_bucket_count / 2);
+		for (auto i = begin(); i < END; i++) {
 			if (i->first != key()) {
-				t = t_start + getStart(i->first);
-				t->first = i->first;
-				t->second = i->second;
+				auto ptr = t_start + getStart(i->first);
+				rehash_loop:
+				for (ptr; ptr < t_end; ptr++) {
+					if (ptr->first == key()) {
+						ptr->first = i->first;
+						ptr->second = i->second;
+						break;
+					}
+				}
+				if (ptr == t_end) {
+					ptr = t_start;
+					goto rehash_loop;
+				}
 			}
 		}
-		swap(temp, buckets); // swap addresses
+		std::swap(temp, buckets);
 		delete[] temp;
 	};
 
 	inline int getStart(const key& k) const noexcept {
 		return std::hash<key>{}(k) % _bucket_count;
 	};
-	void swap(HASH_NODE* h1, HASH_NODE* h2) noexcept {
-		HASH_NODE* temp = h1;
-		h1 = h2;
-		h2 = temp;
+	bool ptr_swap(HASH_NODE** h1, HASH_NODE** h2) noexcept {
+		HASH_NODE* temp = *h1;
+		*h1 = *h2;
+		*h2 = temp;
+		return true;
 	};
 };
 
