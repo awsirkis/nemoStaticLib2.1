@@ -7,11 +7,11 @@
 #endif
 #define _max_bucket_count 1000000
 #define _max_load_factor 0.75
+
 template <class key, class Value> class HASH_MAP
 {
 	int _bucket_count = 100;
 	int array_size = 0;
-	HASH_NODE* buckets;
 public:
 	struct HASH_NODE {
 	public:
@@ -33,6 +33,9 @@ public:
 			second = H.second;
 		}
 	};
+private:
+	HASH_NODE* buckets;
+public:
 	HASH_MAP<key, Value>() {
 		buckets = new HASH_NODE[_bucket_count];
 	};
