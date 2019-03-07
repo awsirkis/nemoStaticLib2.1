@@ -1,25 +1,18 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
 #if defined(__has_include)
-#if __has_include(<typeinfo>)
-#include <typeinfo>
-#elif __has_include(<typeinfo.h>)
-#include <typeinfo.h>
-#endif
-#if __has_include(<iterator>)
-#include <iterator>
-#endif
 #if __has_include(<functional>)
 #include <functional>
 #endif
 #endif
-#define _max_bucket_count 10000
+#define _max_bucket_count 1000000
 #define _max_load_factor 0.75
 template <class key, class Value> class HASH_MAP
 {
 	int _bucket_count = 100;
 	int array_size = 0;
-
+	HASH_NODE* buckets;
+public:
 	struct HASH_NODE {
 	public:
 		key first = key();
@@ -40,11 +33,6 @@ template <class key, class Value> class HASH_MAP
 			second = H.second;
 		}
 	};
-	HASH_NODE* buckets;
-	const std::type_info& key_type = typeid(key);
-	const std::type_info& mapped_type = typeid(Value);
-	//const std::type_info& value_type = std::pair < key_type, mapped_type> ;
-public:
 	HASH_MAP<key, Value>() {
 		buckets = new HASH_NODE[_bucket_count];
 	};
@@ -64,7 +52,7 @@ public:
 			}
 		}
 		swap(temp, buckets); // swap addresses
-		delete temp;
+		delete[] temp;
 	};
 	HASH_MAP<key, Value> operator=(const HASH_MAP<key, Value>& H) {
 		_bucket_count = H._bucket_count;
@@ -79,26 +67,26 @@ public:
 			}
 		}
 		swap(temp, buckets); // swap addresses
-		delete temp;
+		delete[] temp;
 	};
 
 	// Size Operators, NoExcep
-	inline int size() const {
+	inline int size() const noexcept {
 		return array_size;
 	};
 	//inline int max_size() const; // UNNECSSARY FOR NEMOSTATICLIB
 
 	// Access Functions
-	Value& operator[](const key& k) const {
+	Value& operator[](const key& k) const noexcept {
 		return (begin() + getStart(k))->second;
 	};
-	Value& operator[](key&& k) const {
+	Value& operator[](key&& k) const noexcept {
 		return (begin() + getStart(k))->second;
 	};
-	Value& at(const key& k) const {
+	Value& at(const key& k) const noexcept {
 		return (begin() + getStart(k))->second;
 	};
-	Value& at(key&& k) const {
+	Value& at(key&& k) const noexcept {
 		return (begin() + getStart(k))->second;
 	};
 	//iterator find(const key&) const; // UNNECESSARY FOR NEMOSTATICLIB
@@ -106,7 +94,7 @@ public:
 	//
 	// Start from the expected value that we would find a value with key at
 	// go forward until we find it or we find an empty cell with the default key
-	int count(const key& k) const{
+	int count(const key& k) const noexcept {
 		int found = 0;
 		int start = getStart(k);
 		HASH_NODE* ptr = begin() + start;
@@ -120,33 +108,41 @@ public:
 		}
 		return found;
 	};
-	//pair<int, int> equal_range(const key&) const; UNNECESSARY FOR NEMOSTATICLIB
 
 	//Iterator Functions
-	inline auto begin() const {
+	inline auto begin() const noexcept {
 		return &buckets[0];
 	};
-	inline auto end() const {
+	inline auto end() const noexcept {
 		return &buckets[_bucket_count];
 	};
-	//const iterator cbegin() const
-	//const iterator cend() const
+	const inline auto cbegin() const noexcept {
+		return &buckets[0];
+	};
+	const inline auto cend() const noexcept {
+		return &buckets[_bucket_count];
+	};
 
 	//Modifiers
 	//used in SubgraphCount.cpp as type 6
-	void insert(std::pair<key, Value> p) {
+	void insert(std::pair<key, Value> p) noexcept {
 		if (count(p.first))
 			return;
 		array_size++;
 		int start = getStart(p.first);
 		auto ptr = begin() + start;
 		for (ptr; ptr < end(); ptr++) {
+			// if ptr reaches the end, prevents recursion
+			if (ptr == end() - 1) {
+				insert(p);
+			}
 			if (ptr->first == key()) {
 				ptr->first = p.first;
 				ptr->second = p.second;
 				break;
 			}
 		}
+		// if the load factor is too high or it is overflowing
 		if (load_factor() > max_load_factor()) {
 			rehash();
 		}
@@ -158,14 +154,12 @@ public:
 	//swap
 
 	//Buckets
-	inline size_t bucket_count() const {
+	inline size_t bucket_count() const noexcept {
 		return _bucket_count;
 	};
-	inline size_t max_bucket_count() const {
+	inline size_t max_bucket_count() const noexcept {
 		return _max_bucket_count;
 	};
-	//size_type bucket_size(size_type n) const;
-	//size_type bucket(const key& k) const; // return bucket with key k
 
 	//Hash Policy
 	inline double load_factor() const noexcept {
@@ -174,11 +168,15 @@ public:
 	inline float max_load_factor() const noexcept {
 		return _max_load_factor;
 	};
-	// reserve - unused in NemoStaticLib
-	void rehash() {
+	void rehash() noexcept {
+		if (_bucket_count * 2 < _max_bucket_count) {
+			_bucket_count *= 2;
+		}
+		else
+			_bucket_count = _max_bucket_count;
 		HASH_NODE* temp = new HASH_NODE[_bucket_count *= 2];
 		auto i = begin(), t_start = &temp[0], t = t_start;
-		for (int j = 0; i < end() && j < _bucket_count/2; j++, i++) {
+		for (int j = 0; i < end() && j < _bucket_count / 2; j++, i++) {
 			if (i->first != key()) {
 				t = t_start + getStart(i->first);
 				t->first = i->first;
@@ -189,14 +187,10 @@ public:
 		delete[] temp;
 	};
 
-	//Observers - Unused
-	//hasher hash_function() const;
-	//key_equal key_eq() const;
-	//allocator_type get_allocator() const noexcept;
 	inline int getStart(const key& k) const noexcept {
 		return std::hash<key>{}(k) % _bucket_count;
 	};
-	void swap(HASH_NODE* h1, HASH_NODE* h2) {
+	void swap(HASH_NODE* h1, HASH_NODE* h2) noexcept {
 		HASH_NODE* temp = h1;
 		h1 = h2;
 		h2 = temp;
