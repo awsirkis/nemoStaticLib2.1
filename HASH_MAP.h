@@ -6,44 +6,56 @@
 #include <functional>
 #endif
 #endif
-#define _max_bucket_count 1000000
+#define _max_bucket_count 10000000
 #define _max_load_factor 0.75
 #include <iostream>
 template <class key, class Value> class HASH_MAP
 {
-	int _bucket_count = 10;
+	int _bucket_count = 100;
 	int array_size = 0;
 public:
+	//-------------------------------class HASH_NODE---------------------------
+	// Store the keys and values of spaces in the HASH_MAP
+	// Uses the same key and Value types as HASH_MAP
 	struct HASH_NODE {
 	public:
 		key first = key();
 		Value second = Value();
-		HASH_NODE() {
-		}
-		HASH_NODE(key k, Value v) {
-			first = k;
-			second = v;
-		}
-		//reset node to null values, deallocating increased values 
+		//---------------------------(Constructor)-----------------------------
+		// empty constructor used when allocating new memory for buckets
+		HASH_NODE() {}
+		//---------------------------(Destructor)------------------------------
+		// reset values to the default values
+		// Assumes destructors in Key and Value will take care of themselves
 		~HASH_NODE() {
 			first = key();
 			second = Value();
 		}
-		HASH_NODE operator=(const HASH_NODE& H) {
-			first = H.first;
-			second = H.second;
-			return *this;
-		}
 	};
-private:
+protected:
+	// Store values in a publicly accessible, but still unchangeable container
+	// Stored using iterators for speed
+	// Declared after class HASH_NODE due to declaration order
 	HASH_NODE* buckets;
 public:
+	//-------------------------------(Constructor)-----------------------------
+	// Allocates a new array of HASH_NODE to the size of _bucket_count
+	// Must be dynamically allocated to start with for 
+	// the destructor to function
 	HASH_MAP<key, Value>() {
-		buckets = new HASH_NODE[_bucket_count + 1];
+		buckets = new HASH_NODE[_bucket_count];
 	};
+	// End Constructor
+	//-------------------------------(Destructor)------------------------------
+	// deletes buckets
+	// no other memory dynamically allocated
 	~HASH_MAP<key, Value>() {
 		delete[] buckets;
 	};
+	//-------------------------------(Copy Constructor)------------------------
+	// Makes new HASH_MAP<key, Value> based on rhs
+	// Deletes prior version of lhs.buckets
+	// O(n) all cases
 	HASH_MAP<key, Value>(const HASH_MAP<key, Value>&H) {
 		_bucket_count = H._bucket_count;
 		array_size = H.array_size;
@@ -56,70 +68,116 @@ public:
 				t->second = i->second;
 			}
 		}
-		swap(temp, buckets); // swap addresses
+		std::swap(temp, buckets); // swap addresses
 		delete[] temp;
 	};
+	//-------------------------------operator=---------------------------------
+	// Copies the data from rhs into lhs
+	// Deletes prior version of lhs.buckets
+	// O(n) all cases
 	HASH_MAP<key, Value> operator=(const HASH_MAP<key, Value>& H) {
 		_bucket_count = H._bucket_count;
 		array_size = H.array_size;
 		HASH_NODE* temp = new HASH_NODE[H._bucket_count + 1];
 		auto i = H.begin(), t_start = &temp[0], t = t_start;
-		for (int j = 0; i < end() && j < H._bucket_count; j++, i++) {
+		for (int j = 0; i < H.end() && j < H._bucket_count; j++, i++) {
 			if (i->first != key()) {
 				t = t_start + getStart(i->first);
 				t->first = i->first;
 				t->second = i->second;
 			}
 		}
-		swap(temp, buckets); // swap addresses
+		std::swap(temp, buckets); // swap addresses
 		delete[] temp;
 	};
 
-	// Size Operators, NoExcep
+	//-------------------------------size--------------------------------------
+	// Returns number of successful insertions
+	// O(1) all cases
 	inline int size() const noexcept {
 		return array_size;
 	};
-	//inline int max_size() const; // UNNECSSARY FOR NEMOSTATICLIB
 
-	// Access Functions
+	//-------------------------------operator[]--------------------------------
+	// Iterates through to find the Value associated with key k
+	// returns the value found, if any
+	// else return an empty Value
+	// O(1) Average case, O(n) worst case (full map)
 	Value& operator[](const key& k) const noexcept {
-		for(auto ptr = begin() + getStart(k); ptr < end(); ptr++)
-			if(ptr->first == k)
-				return ptr->second;
+		auto ptr = begin() + getStart(k);
+	count_loop:
+		for (ptr; ptr < end(); ptr++)
+			if (ptr->first == k)
+			return ptr->second;
+		if (ptr == end()) {
+			ptr = begin();
+			goto count_loop;
+		}
 		Value v = Value();
 		Value& vp = v;
 		return v;
 	};
+	//-------------------------------operator[]--------------------------------
+	// Iterates through to find the Value associated with rhs
+	// returns the value found, if any
+	// else return an empty Value
+	// O(1) Average case, O(n) worst case (full map)
 	Value& operator[](key&& k) const noexcept {
-		for (auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+		auto ptr = begin() + getStart(k);
+		count_loop:
+		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
+		if (ptr == end()) {
+			ptr = begin();
+			goto count_loop;
+		}
 		Value v = Value();
 		Value& vp = v;
 		return v;
 	};
+	//-------------------------------at----------------------------------------
+	// Iterates through to find the Value associated with rhs
+	// returns the value found, if any
+	// else return an empty Value
+	// O(1) Average case, O(n) worst case (full map)
 	Value& at(const key& k) const noexcept {
-		for (auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+		auto ptr = begin() + getStart(k);
+	count_loop:
+		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
+		if (ptr == end()) {
+			ptr = begin();
+			goto count_loop;
+		}
 		Value v = Value();
 		Value& vp = v;
 		return v;
 	};
+	//-------------------------------at----------------------------------------
+	// Iterates through to find the Value associated with rhs
+	// returns the value found, if any
+	// else return an empty Value
+	// O(1) Average case, O(n) worst case (full map)
 	Value& at(key&& k) const noexcept {
-		Value v = Value();
-		for (auto ptr = begin() + getStart(k); ptr < end(); ptr++)
+		auto ptr = begin() + getStart(k);
+	count_loop:
+		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
+		if (ptr == end()) {
+			ptr = begin();
+			goto count_loop;
+		}
 		Value v = Value();
 		Value& vp = v;
 		return v;
 	};
-	//iterator find(const key&) const; // UNNECESSARY FOR NEMOSTATICLIB
 	// Graph.cpp - getOrCreateIndex()
-	//
-	// Start from the expected value that we would find a value with key at
-	// go forward until we find it or we find an empty cell with the default key
+	//-------------------------------count-------------------------------------
+	// Returns the number of times rhs is used as an index
+	// O(1) average case, O(n) worst case
 	int count(const key& k) const noexcept {
 		int found = 0;
 		int start = getStart(k);
@@ -129,36 +187,49 @@ public:
 			if (ptr->first == key()) {
 				return found;
 			}
-			else if (ptr->first == k) {
+			if (ptr->first == k) {
 				found++;
 			}
-			if (ptr == end()) {
-				ptr = begin();
-				goto count_loop;
-			}
+		}
+		if (ptr == end()) {
+			ptr = begin();
+			goto count_loop;
 		}
 		return found;
 	};
 
-	//Iterator Functions
+	//-------------------------------begin-------------------------------------
+	// returns an iterator to the beginning of buckets
+	// O(1) all cases
 	inline auto begin() const noexcept {
 		return &buckets[0];
 	};
+	//-------------------------------end---------------------------------------
+	// returns an iterator to the end of buckets
+	// O(1) all cases
 	inline auto end() const noexcept {
 		return &buckets[_bucket_count];
 	};
+	//------------------------------cbegin-------------------------------------
+	// returns a constant iterator to the beginning of buckets
+	// O(1) all cases
 	const inline auto cbegin() const noexcept {
 		return &buckets[0];
 	};
+	//------------------------------cend---------------------------------------
+	// returns a constant iterator to the end of buckets
+	// O(1) all cases
 	const inline auto cend() const noexcept {
 		return &buckets[_bucket_count];
 	};
 
-	//Modifiers
-	//used in SubgraphCount.cpp as type 6
+	//------------------------------insert-------------------------------------
+	// inserts rhs into buckets
+	// will not insert if rhs.first is already in buckets
+	// O(1) average case, O(n + n^2) worst case (forced to rehash)
 	void insert(std::pair<key, Value> p) noexcept {
-		if (count(p.first))
-			return;
+		//if (count(p.first))
+		//	return;
 		array_size++;
 		int start = getStart(p.first);
 		
@@ -183,21 +254,35 @@ public:
 		int z = 0;
 	};
 
-	//Buckets
+	//------------------------------bucket_count-------------------------------
+	// returns the size of buckets
+	// O(1) all cases
 	inline size_t bucket_count() const noexcept {
 		return _bucket_count;
 	};
+	//------------------------------max_bucket_count---------------------------
+	// returns the maximum number of buckets allowed
+	// O(1) all cases
 	inline size_t max_bucket_count() const noexcept {
 		return _max_bucket_count;
 	};
 
-	//Hash Policy
+	//------------------------------load_factor--------------------------------
+	// returns the percentage of buckets that is filled
+	// O(1) all cases
 	inline double load_factor() const noexcept {
 		return size() / (double)bucket_count();
 	};
+	//------------------------------max_load_factor----------------------------
+	// returns the maximum percentage of buckets that are allowed to be filled
+	// O(1) all cases
 	inline float max_load_factor() const noexcept {
 		return _max_load_factor;
 	};
+	//------------------------------rehash-------------------------------------
+	// resizes buckets to twice the current size of _max_bucket_count,
+	// whichever is lower
+	// O(n) average case, O(n^2) worst case
 	void rehash() noexcept {
 		if (_bucket_count * 2 < _max_bucket_count) {
 			_bucket_count *= 2;
@@ -232,15 +317,11 @@ public:
 		std::swap(temp, buckets);
 		delete[] temp;
 	};
-
+	//------------------------------getStart-----------------------------------
+	// return an int for the start of accessors, insert() and count()
+	// O(1) all cases
 	inline int getStart(const key& k) const noexcept {
 		return std::hash<key>{}(k) % _bucket_count;
-	};
-	bool ptr_swap(HASH_NODE** h1, HASH_NODE** h2) noexcept {
-		HASH_NODE* temp = *h1;
-		*h1 = *h2;
-		*h2 = temp;
-		return true;
 	};
 };
 
