@@ -71,26 +71,54 @@ public:
 		std::swap(temp, buckets); // swap addresses
 		delete[] temp;
 	};
+
+	HASH_MAP<key, Value>(HASH_MAP<key, Value>&H) {
+		_bucket_count = H._bucket_count;
+		array_size = H.array_size;
+		buckets = H.buckets;
+		H._bucket_count = 100;
+		H.array_size = 0;
+		H.buckets = new HASH_NODE[100];
+	}
 	//-------------------------------operator=---------------------------------
 	// Copies the data from rhs into lhs
 	// Deletes prior version of lhs.buckets
 	// O(n) all cases
 	HASH_MAP<key, Value> operator=(const HASH_MAP<key, Value>& H) {
-		_bucket_count = H._bucket_count;
-		array_size = H.array_size;
-		HASH_NODE* temp = new HASH_NODE[H._bucket_count + 1];
-		auto i = H.begin(), t_start = &temp[0], t = t_start;
-		for (int j = 0; i < H.end() && j < H._bucket_count; j++, i++) {
-			if (i->first != key()) {
-				t = t_start + getStart(i->first);
-				t->first = i->first;
-				t->second = i->second;
+		if (this != &H) {
+			_bucket_count = H._bucket_count;
+			array_size = H.array_size;
+			HASH_NODE* temp = new HASH_NODE[H._bucket_count + 1];
+			auto i = H.begin(), t_start = &temp[0], t = t_start;
+			for (int j = 0; i < H.end() && j < H._bucket_count; j++, i++) {
+				if (i->first != key()) {
+					t = t_start + getStart(i->first);
+					t->first = i->first;
+					t->second = i->second;
+				}
 			}
+			std::swap(temp, buckets); // swap addresses
+			delete[] temp;
 		}
-		std::swap(temp, buckets); // swap addresses
-		delete[] temp;
+		return *this;
 	};
 
+	//-------------------------------operator=---------------------------------
+	// Moves data from rhs into lhs
+	// Resets rhs
+	// O(1) all cases
+	HASH_MAP<key, Value> operator=(HASH_MAP<key, Value> && H) {
+		if (this != &H) {
+			_bucket_count = H._bucket_count;
+			array_size = H.array_size;
+			delete[] buckets;
+			buckets = H.buckets;
+			H._bucket_count = 100;
+			H.array_size = 0;
+			H.buckets = new HASH_NODE[100];
+		}
+		return *this;
+	}
 	//-------------------------------size--------------------------------------
 	// Returns number of successful insertions
 	// O(1) all cases
@@ -101,21 +129,22 @@ public:
 	//-------------------------------operator[]--------------------------------
 	// Iterates through to find the Value associated with key k
 	// returns the value found, if any
-	// else return an empty Value
+	// else insert the key and return a reference to that location
 	// O(1) Average case, O(n) worst case (full map)
 	Value& operator[](const key& k) const noexcept {
 		auto ptr = begin() + getStart(k);
 	count_loop:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
-			return ptr->second;
+				return ptr->second;
+			else if (ptr->first = key()) {
+				ptr->first = k;
+				return ptr->second;
+			}
 		if (ptr == end()) {
 			ptr = begin();
 			goto count_loop;
 		}
-		Value v = Value();
-		Value& vp = v;
-		return v;
 	};
 	//-------------------------------operator[]--------------------------------
 	// Iterates through to find the Value associated with rhs
@@ -124,17 +153,18 @@ public:
 	// O(1) Average case, O(n) worst case (full map)
 	Value& operator[](key&& k) const noexcept {
 		auto ptr = begin() + getStart(k);
-		count_loop:
+	count_loop:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
+			else if (ptr->first = key()) {
+				ptr->first = k;
+				return ptr->second;
+			}
 		if (ptr == end()) {
 			ptr = begin();
 			goto count_loop;
 		}
-		Value v = Value();
-		Value& vp = v;
-		return v;
 	};
 	//-------------------------------at----------------------------------------
 	// Iterates through to find the Value associated with rhs
@@ -147,13 +177,14 @@ public:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
+			else if (ptr->first = key()) {
+				ptr->first = k;
+				return ptr->second;
+			}
 		if (ptr == end()) {
 			ptr = begin();
 			goto count_loop;
 		}
-		Value v = Value();
-		Value& vp = v;
-		return v;
 	};
 	//-------------------------------at----------------------------------------
 	// Iterates through to find the Value associated with rhs
@@ -166,13 +197,14 @@ public:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
+			else if (ptr->first = key()) {
+				ptr->first = k;
+				return ptr->second;
+			}
 		if (ptr == end()) {
 			ptr = begin();
 			goto count_loop;
 		}
-		Value v = Value();
-		Value& vp = v;
-		return v;
 	};
 	// Graph.cpp - getOrCreateIndex()
 	//-------------------------------count-------------------------------------
