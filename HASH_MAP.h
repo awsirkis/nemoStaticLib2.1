@@ -131,15 +131,19 @@ public:
 	// returns the value found, if any
 	// else insert the key and return a reference to that location
 	// O(1) Average case, O(n) worst case (full map)
-	Value& operator[](const key& k) const noexcept {
+	Value& operator[](const key& k) noexcept {
 		auto ptr = begin() + getStart(k);
 	count_loop:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
-			else if (ptr->first = key()) {
+			else if (ptr->first == key()) {
+				array_size++;
 				ptr->first = k;
-				return ptr->second;
+				if (load_factor() > max_load_factor()) {
+					rehash();
+				}
+				return this->at(k);
 			}
 		if (ptr == end()) {
 			ptr = begin();
@@ -151,15 +155,19 @@ public:
 	// returns the value found, if any
 	// else return an empty Value
 	// O(1) Average case, O(n) worst case (full map)
-	Value& operator[](key&& k) const noexcept {
+	Value& operator[](key&& k) noexcept {
 		auto ptr = begin() + getStart(k);
 	count_loop:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
-			else if (ptr->first = key()) {
+			else if (ptr->first == key()) {
 				ptr->first = k;
-				return ptr->second;
+				array_size++;
+				if (load_factor() > max_load_factor()) {
+					rehash();
+				}
+				return this->at(k);
 			}
 		if (ptr == end()) {
 			ptr = begin();
@@ -171,15 +179,19 @@ public:
 	// returns the value found, if any
 	// else return an empty Value
 	// O(1) Average case, O(n) worst case (full map)
-	Value& at(const key& k) const noexcept {
+	Value& at(const key& k) noexcept {
 		auto ptr = begin() + getStart(k);
 	count_loop:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
-			else if (ptr->first = key()) {
+			else if (ptr->first == key()) {
 				ptr->first = k;
-				return ptr->second;
+				array_size++;
+				if (load_factor() > max_load_factor()) {
+					rehash();
+				}
+				return this->at(k);
 			}
 		if (ptr == end()) {
 			ptr = begin();
@@ -191,15 +203,19 @@ public:
 	// returns the value found, if any
 	// else return an empty Value
 	// O(1) Average case, O(n) worst case (full map)
-	Value& at(key&& k) const noexcept {
+	Value& at(key&& k) noexcept {
 		auto ptr = begin() + getStart(k);
 	count_loop:
 		for (ptr; ptr < end(); ptr++)
 			if (ptr->first == k)
 				return ptr->second;
-			else if (ptr->first = key()) {
+			else if (ptr->first == key()) {
 				ptr->first = k;
-				return ptr->second;
+				array_size++;
+				if (load_factor() > max_load_factor()) {
+					rehash();
+				}
+				return this->at(k);
 			}
 		if (ptr == end()) {
 			ptr = begin();
