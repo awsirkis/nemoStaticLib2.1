@@ -331,7 +331,10 @@ public:
 	// whichever is lower
 	// O(n) average case, O(n^2) worst case
 	void rehash() noexcept {
-		if (_bucket_count * 2 < _max_bucket_count) {
+		if (_bucket_count == _max_bucket_count) {
+			return;
+		}
+		else if (_bucket_count * 2 < _max_bucket_count) {
 			_bucket_count *= 2;
 		}
 		else if (_bucket_count < _max_bucket_count) {
