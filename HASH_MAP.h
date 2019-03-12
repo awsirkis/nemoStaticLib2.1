@@ -226,24 +226,23 @@ public:
 	//-------------------------------count-------------------------------------
 	// Returns the number of times rhs is used as an index
 	// O(1) average case, O(n) worst case
-	int count(const key& k) const noexcept {
+	bool count(const key& k) const noexcept {
 		int found = 0;
 		int start = getStart(k);
 		auto ptr = begin() + start;
 		count_loop:
 		for (ptr; ptr < end(); ptr++) {
 			if (ptr->first == key()) {
-				return found;
+				return false;
 			}
 			if (ptr->first == k) {
-				found++;
+				return true;
 			}
 		}
 		if (ptr == end()) {
 			ptr = begin();
 			goto count_loop;
 		}
-		return found;
 	};
 
 	//-------------------------------begin-------------------------------------
