@@ -84,7 +84,7 @@ public:
 	// Copies the data from rhs into lhs
 	// Deletes prior version of lhs.buckets
 	// O(n) all cases
-	HASH_MAP<key, Value> operator=(const HASH_MAP<key, Value>& H) {
+	HASH_MAP<key, Value>& operator=(const HASH_MAP<key, Value>& H) {
 		if (this != &H) {
 			_bucket_count = H._bucket_count;
 			array_size = H.array_size;
@@ -107,7 +107,7 @@ public:
 	// Moves data from rhs into lhs
 	// Resets rhs
 	// O(1) all cases
-	HASH_MAP<key, Value> operator=(HASH_MAP<key, Value> && H) {
+	HASH_MAP<key, Value>& operator=(HASH_MAP<key, Value> && H) {
 		if (this != &H) {
 			_bucket_count = H._bucket_count;
 			array_size = H.array_size;
