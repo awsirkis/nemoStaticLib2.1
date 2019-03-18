@@ -37,17 +37,17 @@ public:
     virtual ~SubgraphCount();
     /* Implement the add function of subgraph enumeration result*/
     void add(Subgraph&, NautyLink&); 
+    
+    HASH_MAP <graph64, double> getRelativeFrequencies();    
      
-    unordered_map <graph64, double> getRelativeFrequencies();    
-     
-    unordered_map <graph64, uint64> getlabeFreqMap();  
+    HASH_MAP <graph64, uint64> getlabeFreqMap();  
     
  
     
     bool equals(SubgraphCount&); // not implemented yet
     
 private:
-    unordered_map<graph64, uint64> labelFreqMap; 
+    HASH_MAP<graph64, uint64> labelFreqMap; 
     
         
 

@@ -56,12 +56,12 @@ void SubgraphProfile::add(Subgraph& currentSubgraph, NautyLink& nautylink) {
 }
 
 
- unordered_map<graph64, vector<uint64>> SubgraphProfile::getlabelVertexFreqMapMap(){
+ HASH_MAP<graph64, vector<uint64>> SubgraphProfile::getlabelVertexFreqMapMap(){
      return labelVertexFreqMapMap;
  }
  
- unordered_map<graph64, uint64> SubgraphProfile::getlabelFreqMap(int subgraphsize){
-     unordered_map <graph64, uint64> labelFreqMap;
+ HASH_MAP<graph64, uint64> SubgraphProfile::getlabelFreqMap(int subgraphsize){
+     HASH_MAP <graph64, uint64> labelFreqMap;
      uint64 totalcount = getTotalSubgaphCount();
       for (auto& p:labelVertexFreqMapMap ){
           uint64 countLabel =0;
@@ -73,9 +73,9 @@ void SubgraphProfile::add(Subgraph& currentSubgraph, NautyLink& nautylink) {
      return labelFreqMap;
  }
  
- unordered_map <graph64, double> SubgraphProfile::getRelativeFrequencies(){
+ HASH_MAP <graph64, double> SubgraphProfile::getRelativeFrequencies(){
      
-     unordered_map<graph64, double> result;
+     HASH_MAP<graph64, double> result;
      double totalSubgraphCount = (double) getTotalSubgaphCount();
      
      int totalcount = getTotalSubgaphCount();

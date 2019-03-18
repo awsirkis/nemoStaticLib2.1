@@ -40,7 +40,7 @@ Graph::~Graph() {
 
 
 int Graph::addVertex(string nodeName){
-    unordered_map<string, vertex> nameToIndex;
+    HASH_MAP<string, vertex> nameToIndex;
     nameToIndex = name2Index;
     
     if (nameToIndex.count(nodeName)>0){
@@ -113,7 +113,7 @@ bool Graph::isDirected(){
     return directed;
 }
 
- unordered_map < edge, edgetype > Graph::getEdges(){
+ HASH_MAP < edge, edgetype > Graph::getEdges(){
      return edges;
  }
 // get the adjacency list for a given node
@@ -124,15 +124,15 @@ unordered_set<vertex>& Graph::getAdjacencyList(vertex index){
 }
 
 
-unordered_map<string, vertex>& Graph::getNametoIndex(){
+HASH_MAP<string, vertex>& Graph::getNametoIndex(){
     
            return name2Index;
 
 }
 
-unordered_map<vertex, string> Graph::getIndextoName() {
+HASH_MAP<vertex, string> Graph::getIndextoName() {
 
-    unordered_map<vertex, string> Index2name;
+    HASH_MAP<vertex, string> Index2name;
     for (auto v : name2Index) {
         Index2name[v.second] = v.first;
     }
@@ -146,7 +146,7 @@ unordered_map<vertex, string> Graph::getIndextoName() {
 
 void Graph::parse(string filename) {
 
-    unordered_map<string, vertex> nameToIndex;
+    HASH_MAP<string, vertex> nameToIndex;
 
     // we read in all the data at once only so we can easily randomize it
     // with Collections.shuffle()
@@ -176,7 +176,7 @@ void Graph::parse(string filename) {
  
         // don't add self edges
         if (fromIndex == toIndex) continue;
-
+        
         getAdjacencyList(fromIndex).insert(toIndex);
         getAdjacencyList(toIndex).insert(fromIndex);
 //        if (directed) getDirAdjacencyList(fromIndex).insert(toIndex);
@@ -205,7 +205,7 @@ void Graph::parse(string filename) {
     
  // get index of a node given the node's name
     // create an entry if it does not exist
-vertex Graph::getOrCreateIndex(string nodeName, unordered_map<string,vertex>& nameToIndex){
+vertex Graph::getOrCreateIndex(string nodeName, HASH_MAP<string,vertex>& nameToIndex){
     
     if(nameToIndex.count(nodeName)<1){ // if the key does not exists      
         vertex index = (vertex) adjacencyLists.size();
@@ -226,7 +226,7 @@ vertex Graph::getOrCreateIndex(string nodeName, unordered_map<string,vertex>& na
 
 ostream& operator<< (ostream& out, const Graph& graph){
   
-    unordered_map<string, vertex> vertexMap = graph.name2Index;
+    HASH_MAP<string, vertex> vertexMap = graph.name2Index;
 
    
     out<<"Vertices: ";

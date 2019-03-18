@@ -33,20 +33,20 @@ class StatisticalAnalysis {
      
 public:
     StatisticalAnalysis(); // not allowed
-    StatisticalAnalysis(unordered_map<graph64, double>&, unordered_map<graph64, vector<double>>& ,int);
+    StatisticalAnalysis(HASH_MAP<graph64, double>&, HASH_MAP<graph64, vector<double>>& ,int);
     virtual ~StatisticalAnalysis();
     
-    unordered_map<graph64, double> getZScores();
+    HASH_MAP<graph64, double> getZScores();
     double getZScore(graph64);
     double getZScore(graph64, double, double);
-    unordered_map<graph64, double> getPValues();
+    HASH_MAP<graph64, double> getPValues();
     double getPValue(graph64);    
     
     int randGraphCount;
     
 private:
-    unordered_map<graph64, double> targetGraphRelFreqs;
-    unordered_map<graph64, vector<double>> randomGraphRelFreqs;
+    HASH_MAP<graph64, double> targetGraphRelFreqs;
+    HASH_MAP<graph64, vector<double>> randomGraphRelFreqs;
     double calcRandStdDev(graph64, double);
     double calcRandMean(graph64);
     

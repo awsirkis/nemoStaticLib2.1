@@ -38,12 +38,12 @@ RandomGraphAnalysis::~RandomGraphAnalysis() {
  * random graph pool
  */
 
-unordered_map <graph64, vector<double>> RandomGraphAnalysis::analyze(Graph& targetGraph, int randomGraphCount, int subgraphSize, const vector<double>& probs) {
+HASH_MAP <graph64, vector<double>> RandomGraphAnalysis::analyze(Graph& targetGraph, int randomGraphCount, int subgraphSize, const vector<double>& probs) {
     // create the return map and fill it with the labels we found in the
     // target graph, as those are the only labels about which we care
     // TODO consider changing this, as it creates the precondition of 
     // executing the target graph analysis first
-    unordered_map<graph64, vector<double>> labelRelFreqsMap;
+    HASH_MAP<graph64, vector<double>> labelRelFreqsMap;
     for (int i = 0; i < randomGraphCount; i++) {
         //display status for every 100th graph
         if (i % 100 == 99) cout << "Analyzing random graph " << i + 1 << "..." << endl;
@@ -53,7 +53,7 @@ unordered_map <graph64, vector<double>> RandomGraphAnalysis::analyze(Graph& targ
         // enumerate random graphs
         SubgraphCount subgraphCount;
         RandESU::enumerate(randomGraph, subgraphCount, subgraphSize, probs);
-        unordered_map<graph64, double> curLabelRelFreqMap = subgraphCount.getRelativeFrequencies();
+        HASH_MAP<graph64, double> curLabelRelFreqMap = subgraphCount.getRelativeFrequencies();
 
         // populate labelRelReqsMap with result
 

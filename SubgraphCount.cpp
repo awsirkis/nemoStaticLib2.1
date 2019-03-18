@@ -44,16 +44,16 @@ if(labelFreqMap.count(label)>0) total = labelFreqMap[label];
    
 }
 
-unordered_map<graph64, uint64> SubgraphCount::getlabeFreqMap(){
+HASH_MAP<graph64, uint64> SubgraphCount::getlabeFreqMap(){
     return labelFreqMap;
 }
 
 // it might not need in c++ as we directly compute the 
 
 /* Get the relative frequencies instead of count*/
-unordered_map <graph64, double> SubgraphCount::getRelativeFrequencies(){
+HASH_MAP <graph64, double> SubgraphCount::getRelativeFrequencies(){
     uint64 totalSubgraphCount=0;
-    unordered_map<graph64, double> result_map;
+    HASH_MAP<graph64, double> result_map;
     for (auto& p:labelFreqMap){
 //        totalSubgraphCount +=labelFreqMap.at(p.first);
         totalSubgraphCount +=labelFreqMap[p.first];

@@ -28,8 +28,7 @@ using std::string;
 
 
 
-#include <unordered_map> // Like a hash_map. It should be compiled with -std=c++11 option. 
-using std::unordered_map;
+#include "HASH_MAP.h"
 
 #define MAXN 64
 #include <string.h>
@@ -46,8 +45,8 @@ typedef uint64 graph64;//Nauty label
 
 class NautyLink {
 public:
-    NautyLink(int, unordered_map<edge, edgetype>);
-     NautyLink(int, unordered_map<edge, edgetype>, bool);
+    NautyLink(int, HASH_MAP<edge, edgetype>);
+     NautyLink(int, HASH_MAP<edge, edgetype>, bool);
     virtual ~NautyLink();
     void nautyinit();
     int get_G_N();
@@ -71,7 +70,7 @@ private:
     
     DEFAULTOPTIONS(options);
     statsblk(stats); 
-    unordered_map<edge, edgetype> edges; // get the edges when initialize it    
+    HASH_MAP<edge, edgetype> edges; // get the edges when initialize it    
     
  
     

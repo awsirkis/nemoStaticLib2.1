@@ -26,8 +26,7 @@ using std::stringstream;
 #include <vector>
 
 
-#include <unordered_map> // Like a hash_map. It should be compiled with -std=c++11 option. 
-using std::unordered_map;
+#include "HASH_MAP.h"
 #include <unordered_set> // Like a hash_set. It should be compiled with -std=c++11 option. 
 using std::unordered_set;
 
@@ -71,9 +70,9 @@ public:
     unordered_set<vertex>& getAdjacencyList(vertex);
 
     
-    unordered_map <string, vertex>& getNametoIndex();
-    unordered_map<vertex, string> getIndextoName(); // will be useful if need to match the index to name
-   unordered_map < edge, edgetype > getEdges();; // added by following the original ESU program
+    HASH_MAP <string, vertex>& getNametoIndex();
+    HASH_MAP<vertex, string> getIndextoName(); // will be useful if need to match the index to name
+   HASH_MAP < edge, edgetype > getEdges();; // added by following the original ESU program
 
  
    
@@ -99,13 +98,13 @@ private:
   //  vector<unordered_set <vertex> > dir_adjacencyLists; // this is only for directed graph (might not need)
     
     void parse(string);
-    vertex getOrCreateIndex(string, unordered_map<string, vertex>&);
+    vertex getOrCreateIndex(string, HASH_MAP<string, vertex>&);
          /**
 	 * name2Index as a hashmap so key is a node name (string) and value is its index. Will be used when graph is read from file
 	 */
-    unordered_map<string, vertex> name2Index;
+    HASH_MAP<string, vertex> name2Index;
     bool directed; // added by WK (10/18/2017)       
-	unordered_map < edge, edgetype > edges; // added by following the original ESU program
+    HASH_MAP < edge, edgetype > edges; // added by following the original ESU program
 
     
     

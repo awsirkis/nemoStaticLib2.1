@@ -26,16 +26,16 @@ StatisticalAnalysis::StatisticalAnalysis() { //not used
 StatisticalAnalysis::~StatisticalAnalysis() {
 }
 
-StatisticalAnalysis::StatisticalAnalysis(unordered_map<graph64, double>& targetGraphRelFreqsMap,
-        unordered_map<graph64, vector<double>>& randomGraphRelFreqsMap,
+StatisticalAnalysis::StatisticalAnalysis(HASH_MAP<graph64, double>& targetGraphRelFreqsMap,
+        HASH_MAP<graph64, vector<double>>& randomGraphRelFreqsMap,
         int randGraphCount) {
     this->targetGraphRelFreqs = targetGraphRelFreqsMap;
     this->randomGraphRelFreqs = randomGraphRelFreqsMap;
     this->randGraphCount = randGraphCount;
 }
 
-unordered_map<graph64, double> StatisticalAnalysis::getZScores() {
-    unordered_map<graph64, double> zScores;
+HASH_MAP<graph64, double> StatisticalAnalysis::getZScores() {
+    HASH_MAP<graph64, double> zScores;
     for (auto& p : randomGraphRelFreqs) {
          graph64 label = p.first;
         double randMean = calcRandMean(label);
@@ -82,8 +82,8 @@ double StatisticalAnalysis::calcRandStdDev(graph64 label, double randMean) {
     return sqrt(variance / (randGraphCount - 1));
 }
 
-unordered_map<graph64, double> StatisticalAnalysis::getPValues() {
-    unordered_map<graph64, double>  pValues;
+HASH_MAP<graph64, double> StatisticalAnalysis::getPValues() {
+    HASH_MAP<graph64, double>  pValues;
      for (auto& p : randomGraphRelFreqs) {
          graph64 label = p.first;
         double pValue = getPValue(label);

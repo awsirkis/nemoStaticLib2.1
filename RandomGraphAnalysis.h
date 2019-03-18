@@ -33,7 +33,7 @@ class RandomGraphAnalysis {
 public:
     RandomGraphAnalysis();
     virtual ~RandomGraphAnalysis();
-    static unordered_map<graph64, vector<double>> analyze(Graph&, int, int, const vector<double>&);  
+    static HASH_MAP<graph64, vector<double>> analyze(Graph&, int, int, const vector<double>&);  
         
     
 private:

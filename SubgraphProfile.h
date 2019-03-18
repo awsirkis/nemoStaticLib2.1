@@ -27,9 +27,9 @@ public:
     virtual ~SubgraphProfile();
     void add(Subgraph&, NautyLink&); 
       
-    unordered_map <graph64, double> getRelativeFrequencies();
-    unordered_map<graph64, vector<uint64>> getlabelVertexFreqMapMap();
-    unordered_map<graph64, uint64> getlabelFreqMap(int); //need subgraphsize to calculate frequency
+    HASH_MAP <graph64, double> getRelativeFrequencies();
+    HASH_MAP<graph64, vector<uint64>> getlabelVertexFreqMapMap();
+    HASH_MAP<graph64, uint64> getlabelFreqMap(int); //need subgraphsize to calculate frequency
     /**
 	 * Merge this SubgraphProfile with another SubgraphProfile
 	 * @param other the other SubgraphProfile to merge with this 
@@ -37,7 +37,7 @@ public:
 	 */
     void merge();
 private:
-    unordered_map<graph64, vector<uint64>> labelVertexFreqMapMap;
+    HASH_MAP<graph64, vector<uint64>> labelVertexFreqMapMap;
     uint64 getTotalSubgaphCount();
     uint64 graphsize;
 

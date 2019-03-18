@@ -13,11 +13,11 @@
 
 #include "NautyLink.h"
 
-NautyLink::NautyLink(int subgraphsize, unordered_map<edge, edgetype> edgeset):NautyLink(subgraphsize, edgeset, false)  {
+NautyLink::NautyLink(int subgraphsize, HASH_MAP<edge, edgetype> edgeset):NautyLink(subgraphsize, edgeset, false)  {
 
 }
 
-NautyLink::NautyLink(int subgraphsize, unordered_map<edge, edgetype> edgeset, bool dir) {
+NautyLink::NautyLink(int subgraphsize, HASH_MAP<edge, edgetype> edgeset, bool dir) {
     G_N=subgraphsize;
     directed=dir;
     nautyinit();

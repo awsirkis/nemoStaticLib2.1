@@ -19,11 +19,7 @@
 using std::cout;
 using std::ostream;
 
-//#include <sparsehash/sparse_hash_map>
-//using google::sparse_hash_map; 
-
-#include <unordered_map>
-using std::unordered_map; 
+#include "HASH_MAP.h"
 
 
 
@@ -44,7 +40,7 @@ public:
 	 * of labels in this subgraph.
 	 * @return The map of relative frequencies
 	 */
-    virtual unordered_map <graph64, double> getRelativeFrequencies()=0;
+    virtual HASH_MAP <graph64, double> getRelativeFrequencies()=0;
     
     
 
