@@ -9,23 +9,12 @@ used, it is necessary to check they are correct.
 ====================================================================*/
 
 /* Check whether various headers are available */
+
 #define HAVE_ISATTY  1     /* if isatty() is available */
-#if defined(__has_includes)
-#if __has_includes(<sys/time.h>)
 #define HAVE_TIMES  1      /* if times() is available */
-#else
-#define HAVE_TIMES 0
-#endif
-#if __has_includes(<time.h>)
 #define HAVE_TIME  1      /* if time() is available */
-#else
-#define HAVE_TIME 0
-#endif
-#if __has_includes(<sys/time.h>) && __has_includes(<sys/resource.h>)
 #define HAVE_GETRUSAGE 1  /* if getrusage() is available */
 #define HAVE_GETTIMEOFDAY  1  /* if gettimeofday() */
-#endif
-#endif
 
 /*==================================================================*/
 

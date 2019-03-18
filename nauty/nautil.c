@@ -300,14 +300,13 @@ writeperm(FILE *f, int *perm, boolean cartesian, int linelength, int n)
     char s[30];
 
 #if !MAXN
-	char writeperm_ptr[] = "writeperm";
-    DYNALLOC1(int,workperm,workperm_sz,n,writeperm_ptr);
+    DYNALLOC1(int,workperm,workperm_sz,n,"writeperm");
 #endif
 
     /* CONDNL(x) writes end-of-line and 3 spaces if x characters
        won't fit on the current line. */
 #define CONDNL(x) if (linelength>0 && curlen+(x)>linelength)\
-              {char newline_ptr[] = "\n   "; putstring(f,newline_ptr);curlen=3;}
+              {putstring(f,"\n   ");curlen=3;}
 
     curlen = 0;
     if (cartesian)
@@ -353,8 +352,8 @@ writeperm(FILE *f, int *perm, boolean cartesian, int linelength, int n)
                 ++curlen;
             }
         }
-		char newline1[] = "(1)\n";
-        if (curlen == 0) putstring(f,newline1);
+
+        if (curlen == 0) putstring(f,"(1)\n");
         else             PUTC('\n',f);
     }
 }
@@ -375,8 +374,7 @@ fmperm(int *perm, set *fix, set *mcr, int m, int n)
     int i,k,l;
 
 #if !MAXN
-	char writeperm[] = "writeperm";
-    DYNALLOC1(int,workperm,workperm_sz,n,writeperm);
+    DYNALLOC1(int,workperm,workperm_sz,n,"writeperm");
 #endif
 
     EMPTYSET(fix,m);
@@ -487,8 +485,7 @@ doref(graph *g, int *lab, int *ptn, int level, int *numcells,
     boolean same;
 
 #if !MAXN 
-	char doref[] = "doref";
-    DYNALLOC1(int,workperm,workperm_sz,n,doref); 
+    DYNALLOC1(int,workperm,workperm_sz,n,"doref"); 
 #endif
 
     if ((tvpos = nextelement(active,M,-1)) < 0) tvpos = 0;
@@ -668,10 +665,8 @@ longprune(set *tcell, set *fix, set *bottom, set *top, int m)
 void
 writegroupsize(FILE *f, double gpsize1, int gpsize2)
 {
-	if (gpsize2 == 0) {
-		char char_f[] = "%.0f";
-		fprintf(f, char_f, gpsize1 + 0.1);
-	}
+    if (gpsize2 == 0)
+        fprintf(f,"%.0f",gpsize1+0.1);
     else
     {   
         while (gpsize1 >= 10.0)
@@ -679,8 +674,7 @@ writegroupsize(FILE *f, double gpsize1, int gpsize2)
             gpsize1 /= 10.0;
             ++gpsize2;
         }
-		char char_f[] = "%14.12fe%d";
-        fprintf(f,char_f,gpsize1,gpsize2);
+        fprintf(f,"%14.12fe%d",gpsize1,gpsize2);
     }
 }
 
@@ -696,31 +690,27 @@ nautil_check(int wordsize, int m, int n, int version)
 {
     if (wordsize != WORDSIZE)
     {
-		char error[] = "Error: WORDSIZE mismatch in nautil.c\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: WORDSIZE mismatch in nautil.c\n");
         exit(1);
     }
 
 #if MAXN
     if (m > MAXM)
     {
-		char error[] = "Error: MAXM inadequate in nautil.c\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: MAXM inadequate in nautil.c\n");
         exit(1);
     }
 
     if (n > MAXN)
     {
-		char error[] = "Error: MAXN inadequate in nautil.c\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: MAXN inadequate in nautil.c\n");
         exit(1);
     }
 #endif
 
     if (version < NAUTYREQUIRED)
     {
-		char error[] = "Error: nautil.c version mismatch\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: nautil.c version mismatch\n");
         exit(1);
     }
 }
@@ -734,8 +724,7 @@ nautil_check(int wordsize, int m, int n, int version)
 void
 alloc_error(char *s)
 {
-	char error[] = "Dynamic allocation failed: %s\n";
-    fprintf(ERRFILE,error,s);
+    fprintf(ERRFILE,"Dynamic allocation failed: %s\n",s);
     exit(2);
 }
 

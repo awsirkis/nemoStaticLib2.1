@@ -102,9 +102,8 @@ testcanlab(graph *g, graph *canong, int *lab, int *samerows, int m, int n)
     set *ph;
 
 #if !MAXN
-	char testcanlab[] = "testcanlab";
-    DYNALLOC1(int,workperm,workperm_sz,n,testcanlab);
-    DYNALLOC1(set,workset,workset_sz,m,testcanlab);
+    DYNALLOC1(int,workperm,workperm_sz,n,"testcanlab");
+    DYNALLOC1(set,workset,workset_sz,m,"testcanlab");
 #endif
 
     for (i = 0; i < n; ++i) workperm[lab[i]] = i;
@@ -145,8 +144,7 @@ updatecan(graph *g, graph *canong, int *lab, int samerows, int m, int n)
     set *ph;
 
 #if !MAXN
-	char updateca[] = "updatecan";
-    DYNALLOC1(int,workperm,workperm_sz,n,updatecan);
+    DYNALLOC1(int,workperm,workperm_sz,n,"updatecan");
 #endif
 
     for (i = 0; i < n; ++i) workperm[lab[i]] = i;
@@ -194,10 +192,9 @@ refine(graph *g, int *lab, int *ptn, int level, int *numcells,
     int maxcell,maxpos,hint;
 
 #if !MAXN
-	char refine[] = "refine";
-    DYNALLOC1(int,workperm,workperm_sz,n,refine);
-    DYNALLOC1(set,workset,workset_sz,m,refine);
-    DYNALLOC1(int,bucket,bucket_sz,n+2,refine);
+    DYNALLOC1(int,workperm,workperm_sz,n,"refine");
+    DYNALLOC1(set,workset,workset_sz,m,"refine");
+    DYNALLOC1(int,bucket,bucket_sz,n+2,"refine");
 #endif
 
     longcode = *numcells;
@@ -351,9 +348,8 @@ refine1(graph *g, int *lab, int *ptn, int level, int *numcells,
     int maxcell,maxpos,hint;
 
 #if !MAXN 
-	char refine1[] = "refine1";
-    DYNALLOC1(int,workperm,workperm_sz,n,refine1); 
-    DYNALLOC1(int,bucket,bucket_sz,n+2,refine1); 
+    DYNALLOC1(int,workperm,workperm_sz,n,"refine1"); 
+    DYNALLOC1(int,bucket,bucket_sz,n+2,"refine1"); 
 #endif
 
     longcode = *numcells;
@@ -535,10 +531,9 @@ bestcell(graph *g, int *lab, int *ptn, int level, int tc_level, int m, int n)
     int v1,v2,nnt;
 
 #if !MAXN 
-	char bestcell[] = "bestcell";
-    DYNALLOC1(int,workperm,workperm_sz,n,bestcell); 
-    DYNALLOC1(set,workset,workset_sz,m,bestcell); 
-    DYNALLOC1(int,bucket,bucket_sz,n+2,bestcell); 
+    DYNALLOC1(int,workperm,workperm_sz,n,"bestcell"); 
+    DYNALLOC1(set,workset,workset_sz,m,"bestcell"); 
+    DYNALLOC1(int,bucket,bucket_sz,n+2,"bestcell"); 
 #endif
 
    /* find non-singleton cells: put starts in workperm[0..nnt-1] */
@@ -650,14 +645,12 @@ densenauty(graph *g, int *lab, int *ptn, int *orbits,
 {
     if (options->dispatch != &dispatch_graph)
     {
-		char error[] = "Error: densenauty() needs standard options block\n";
-	fprintf(ERRFILE,error);
+	fprintf(ERRFILE,"Error: densenauty() needs standard options block\n");
 	exit(1);
     }
 
 #if !MAXN
-	char malloc_ptr[] = "densenauty malloc";
-    DYNALLOC1(set,dnwork,dnwork_sz,2*60*m,malloc_ptr);
+    DYNALLOC1(set,dnwork,dnwork_sz,2*60*m,"densenauty malloc");
 #endif
 
     nauty(g,lab,ptn,NULL,orbits,options,stats,dnwork,2*60*m,m,n,h);
@@ -675,31 +668,27 @@ naugraph_check(int wordsize, int m, int n, int version)
 {
     if (wordsize != WORDSIZE)
     {
-		char error[] = "Error: WORDSIZE mismatch in naugraph.c\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: WORDSIZE mismatch in naugraph.c\n");
         exit(1);
     }
 
 #if MAXN
     if (m > MAXM)
     {
-		char error[] = "Error: MAXM inadequate in naugraph.c\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: MAXM inadequate in naugraph.c\n");
         exit(1);
     }
 
     if (n > MAXN)
     {
-		char error[] = "Error: MAXN inadequate in naugraph.c\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: MAXN inadequate in naugraph.c\n");
         exit(1);
     }
 #endif
 
     if (version < NAUTYREQUIRED)
     {
-		char error[] = "Error: naugraph.c version mismatch\n";
-        fprintf(ERRFILE,error);
+        fprintf(ERRFILE,"Error: naugraph.c version mismatch\n");
         exit(1);
     }
 }

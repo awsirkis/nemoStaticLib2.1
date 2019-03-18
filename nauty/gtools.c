@@ -2,6 +2,7 @@
 /* Version 2.6, Jan 2011. */
 
 /* Todo: size check if MAXN>0; option to free memory */
+
 #include "gtools.h"
 
 #ifndef SEEK_SET
@@ -95,7 +96,6 @@ opengraphfile(char *filename, int *codetype, int assumefixed, long position)
     FILE *f;
     int c,bl,firstc;
     long i,l;
-	errno_t err;
     OFF_T_VER pos,pos1,pos2;
     boolean bad_header;
 
@@ -123,7 +123,7 @@ opengraphfile(char *filename, int *codetype, int assumefixed, long position)
             is_pipe = TRUE;
         }
         else
-            fopen_s(&f, filename,"r");
+            f = fopen(filename,"r");
 
         if (f == NULL)
         {

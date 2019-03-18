@@ -1,4 +1,3 @@
-
 /* sorttemplates.c version 1.0, May 11, 2010.
  * Author: Brendan McKay; bdm@cs.anu.edu.au
  *
@@ -37,7 +36,7 @@
  *   This file can be included any number of times provided the value
  *   of SORT_NAME is different each time.
  */
-
+ 
 #define SORT_MEDIAN_OF_3(a,b,c) \
  ((a) <= (b) ? ((b) <= (c) ? (b) : (c) <= (a) ? (a) : (c)) \
              : ((a) <= (c) ? (a) : (c) <= (b) ? (b) : (c)))

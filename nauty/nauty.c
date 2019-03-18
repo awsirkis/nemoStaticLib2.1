@@ -67,19 +67,8 @@
 *****************************************************************************/
 
 #define ONE_WORD_SETS
-#if defined(__has_include)
-#if __has_include("nauty.h")
 #include "nauty.h"
-#endif
-#endif
 #include "schreier.h"
-#include "nautil.c"
-#include "gtools.h"
-#include "nausparse.h"
-#include "nautinv.h"
-#include "naututil.h"
-//#include "naugraph.c"
-#include "sorttemplates.c"
 
 #ifdef NAUTY_IN_MAGMA
 #include "cleanup.e"
@@ -165,7 +154,7 @@ static TLS_ATTR boolean needshortprune;  /* used to flag calls to shortprune */
 
 #if !MAXN
 DYNALLSTAT(set,defltwork,defltwork_sz);
-//DYNALLSTAT(int,workperm,workperm_sz);
+DYNALLSTAT(int,workperm,workperm_sz);
 DYNALLSTAT(set,fixedpts,fixedpts_sz);
 DYNALLSTAT(int,firstlab,firstlab_sz);
 DYNALLSTAT(int,canonlab,canonlab_sz);
@@ -345,16 +334,15 @@ nauty(graph *g_arg, int *lab, int *ptn, set *active_arg,
     OPTCALL(dispatch.check)(WORDSIZE,m,n,NAUTYVERSIONID);
 
 #if !MAXN
-	char nauty_ptr[6] = "nauty";
-    DYNALLOC1(set,defltwork,defltwork_sz,2*m,nauty_ptr);
-    DYNALLOC1(set,fixedpts,fixedpts_sz,m, nauty_ptr);
-    DYNALLOC1(set,active,active_sz,m, nauty_ptr);
-    DYNALLOC1(int,workperm,workperm_sz,n, nauty_ptr);
-    DYNALLOC1(int,firstlab,firstlab_sz,n, nauty_ptr);
-    DYNALLOC1(int,canonlab,canonlab_sz,n, nauty_ptr);
-    DYNALLOC1(short,firstcode,firstcode_sz,n+2, nauty_ptr);
-    DYNALLOC1(short,canoncode,canoncode_sz,n+2, nauty_ptr);
-    DYNALLOC1(int,firsttc,firsttc_sz,n+2, nauty_ptr);
+    DYNALLOC1(set,defltwork,defltwork_sz,2*m,"nauty");
+    DYNALLOC1(set,fixedpts,fixedpts_sz,m,"nauty");
+    DYNALLOC1(set,active,active_sz,m,"nauty");
+    DYNALLOC1(int,workperm,workperm_sz,n,"nauty");
+    DYNALLOC1(int,firstlab,firstlab_sz,n,"nauty");
+    DYNALLOC1(int,canonlab,canonlab_sz,n,"nauty");
+    DYNALLOC1(short,firstcode,firstcode_sz,n+2,"nauty");
+    DYNALLOC1(short,canoncode,canoncode_sz,n+2,"nauty");
+    DYNALLOC1(int,firsttc,firsttc_sz,n+2,"nauty");
     if (m > alloc_m)
     {
         tcp = tcnode0.next;
@@ -564,12 +552,10 @@ firstpathnode(int *lab, int *ptn, int level, int numcells)
     tcnode_this = tcnode_parent->next;
     if (tcnode_this == NULL)
     {
-		if ((tcnode_this = (tcnode*)ALLOCS(1, sizeof(tcnode))) == NULL ||
-			(tcnode_this->tcellptr
-				= (set*)ALLOCS(alloc_m, sizeof(set))) == NULL) {
-			char tcell[6] = { 't', 'c', 'e', 'l', 'l', '\0' };
-			alloc_error(tcell);
-		}
+        if ((tcnode_this = (tcnode*)ALLOCS(1,sizeof(tcnode))) == NULL ||
+            (tcnode_this->tcellptr
+                         = (set*)ALLOCS(alloc_m,sizeof(set))) == NULL)
+            alloc_error("tcell");
         tcnode_parent->next = tcnode_this;
         tcnode_this->next = NULL;
     }
@@ -711,12 +697,10 @@ othernode(int *lab, int *ptn, int level, int numcells)
     tcnode_this = tcnode_parent->next;
     if (tcnode_this == NULL)
     {
-		if ((tcnode_this = (tcnode*)ALLOCS(1, sizeof(tcnode))) == NULL ||
-			(tcnode_this->tcellptr
-				= (set*)ALLOCS(alloc_m, sizeof(set))) == NULL) {
-			char tcell[6] = { 't', 'c', 'e', 'l', 'l', '\0' };
-			alloc_error(tcell);
-		}
+        if ((tcnode_this = (tcnode*)ALLOCS(1,sizeof(tcnode))) == NULL ||
+            (tcnode_this->tcellptr
+                     = (set*)ALLOCS(alloc_m,sizeof(set))) == NULL)
+            alloc_error("tcell");
         tcnode_parent->next = tcnode_this;
         tcnode_this->next = NULL;
     }
@@ -1085,38 +1069,30 @@ writemarker(int level, int tv, int index, int tcellsize,
 
 #define PUTINT(i) itos(i,s); putstring(outfile,s)
 #define PUTSTR(x) putstring(outfile,x)
-	char level_ptr[6] = { 'l', 'e', 'v', 'e', 'l', '\0' };
-	char colon_ptr[4] = { ':', ' ', ' ', '\0' };
-	char cell_ptr[6] = { ' ', 'c', 'e', 'l', 'l', '\0' };
-	char semicolon_ptr[3] = { ';', ' ', '\0' };
-	char orbit_ptr[7] = { ' ', 'o', 'r', 'b', 'i', 't', '\0' };
-	char s_semicolon_ptr[4] = { 's', ';', ' ', '\0' };
-	char newline[2] = { '\n', '\0' };
-	char slash[2] = { '/', '\0' };
-	char fixed_index_ptr[15] = { ' ','f','i','x','e','d',';',' ','i','n','d','e','x',' ', '\0' };
-    PUTSTR(level_ptr);
+
+    PUTSTR("level ");
     PUTINT(level);
-    PUTSTR(colon_ptr);
+    PUTSTR(":  ");
     if (numcells != numorbits)
     {
         PUTINT(numcells);
-        PUTSTR(cell_ptr);
-        if (numcells == 1) PUTSTR(semicolon_ptr);
-        else               PUTSTR(s_semicolon_ptr);
+        PUTSTR(" cell");
+        if (numcells == 1) PUTSTR("; ");
+        else               PUTSTR("s; ");
     }
     PUTINT(numorbits);
-    PUTSTR(orbit_ptr);
-    if (numorbits == 1) PUTSTR(semicolon_ptr);
-    else                PUTSTR(s_semicolon_ptr);
+    PUTSTR(" orbit");
+    if (numorbits == 1) PUTSTR("; ");
+    else                PUTSTR("s; ");
     PUTINT(tv+labelorg);
-    PUTSTR(fixed_index_ptr);
+    PUTSTR(" fixed; index ");
     PUTINT(index);
     if (tcellsize != index)
     {
-        PUTSTR(slash);
+        PUTSTR("/");
         PUTINT(tcellsize);
     }
-    PUTSTR(newline);
+    PUTSTR("\n");
 }
 
 /*****************************************************************************

@@ -12,20 +12,7 @@ it is necessary to check they are correct.
 ====================================================================*/
 
 /* Check whether various headers or options are available */
-#if defined(__has_include)
-#if __has_include(<unistd.h>)
-#  define HAVE_UNISTD_H 1	/// <unistd.h> for UNIX
-#else
-#	define HAVE_UNISTD_H 0
-#endif
-#endif
-#if defined(__has_include)
-#if __has_include(<process.h>)
-#  define HAVE_PROCESS_H 1	/// <process.h> for Windows
-#else
-#	define HAVE_PROCESS_H 0
-#endif
-#endif
+#define HAVE_UNISTD_H  1    /* <unistd.h> */
 #define HAVE_SYSTYPES_H  1    /* <sys/types.h> */
 #define HAVE_STDDEF_H  1     /* <stddef.h> */
 #define HAVE_STDLIB_H  1    /* <stdlib.h> */
@@ -334,17 +321,14 @@ it is necessary to check they are correct.
 *    This is  refined for the root of the tree, which has level 1.           *
 *                                                                            *
 *****************************************************************************/
-#define WIN32
+
 #ifndef NAUTY_IN_MAGMA
 #if HAVE_SYSTYPES_H
 #include <sys/types.h>
 #endif
-#if HAVE_PROCESS_H
-#include <process.h>
+#if HAVE_UNISTD_H
+#include <unistd.h>
 #endif
-//#if HAVE_UNISTD_H
-//#include <unistd.h>
-//#endif
 #if HAVE_STDDEF_H
 #include <stddef.h>
 #endif

@@ -14,16 +14,9 @@ used, it is necessary to check they are correct.
 
 #define HAVE_ERRNO_H  1      /* <errno.h> exists */
 #define HAVE_PERROR  1          /* perror() exists */
-#define HAVE_PIPE  1          /* pipe() exists */          
-#if defined(__has_include)
-#if __has_include(<sys/wait.h>) /* <sys/wait.h> exists */
-#	define	HAVE_WAIT_H 1
-#	define HAVE_WAIT  1			/* wait() exists */
-#else
-#	define HAVE_WAIT_H 0
-#	define HAVE_WAIT  0
-#endif
-#endif
+#define HAVE_PIPE  1          /* pipe() exists */
+#define HAVE_WAIT  1          /* wait() exists */
+#define HAVE_WAIT_H  1     /* <sys/wait.h> exists */
 #define HAVE_POPEN  1          /* popen() and pclose() exist */
 #define POPEN_DEC  1         /* popen() is declared in stdio.h */
 #define FTELL_DEC  1         /* ftell() is declared in stdio.h */
@@ -206,7 +199,7 @@ extern sparsegraph *readpc_sg(FILE*,sparsegraph*);
 extern sparsegraph *readpcle_sg(FILE*,sparsegraph*);
 extern char *getecline(FILE*);
 extern void writelast(FILE*);
-extern int longvalue(char**,long*);
+extern int longval(char**,long*);
 extern void arg_int(char**,int*,char*);
 extern void arg_long(char**,long*,char*);
 extern void arg_range(char**,char*,long*,long*,char*);
