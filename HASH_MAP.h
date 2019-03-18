@@ -1,6 +1,16 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
 
+//------------------------------------------- HASH_MAP.h ---------------------------------------------------------------
+// Author: Adam Sirkis
+// Creation: 02-08-2019
+// Modified: 03-16-2019
+//----------------------------------------------------------------------------------------------------------------------
+// Purpose: Class to store paired values in a memory block
+//	    Operates the same as C++ STL unordered_map
+//	    Average 40% faster than standard
+//----------------------------------------------------------------------------------------------------------------------
+
 #if defined(__has_include)
 #if __has_include(<functional>)
 #include <functional>
@@ -8,7 +18,6 @@
 #endif
 #define _max_bucket_count 10000000
 #define _max_load_factor 0.75
-#include <iostream>
 template <class key, class Value> class HASH_MAP
 {
 	int _bucket_count = 100;
