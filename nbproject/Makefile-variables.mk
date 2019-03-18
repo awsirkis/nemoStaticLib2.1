@@ -12,16 +12,16 @@ CND_ARTIFACT_DIR_Debug=dist
 CND_ARTIFACT_NAME_Debug=libnemostaticlib.a
 CND_ARTIFACT_PATH_Debug=dist/libnemostaticlib.a
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=NemoStaticLib.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/NemoStaticLib.tar
+CND_PACKAGE_NAME_Debug=NemoStaticLibNORM.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/NemoStaticLibNORM.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=libnemostaticlib.a
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/libnemostaticlib.a
+CND_ARTIFACT_NAME_Release=libnemostaticlibnorm.a
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/libnemostaticlibnorm.a
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=NemoStaticLib.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/NemoStaticLib.tar
+CND_PACKAGE_NAME_Release=NemoStaticLibNORM.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/NemoStaticLibNORM.tar
 #
 # include compiler specific variables
 #

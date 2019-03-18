@@ -85,110 +85,110 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlib.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlibnorm.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlib.a: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlibnorm.a: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlib.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlib.a ${OBJECTFILES} 
-	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlib.a
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlibnorm.a
+	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlibnorm.a ${OBJECTFILES} 
+	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlibnorm.a
 
-${OBJECTDIR}/ESU.o: ESU.cpp 
+${OBJECTDIR}/ESU.o: ESU.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ESU.o ESU.cpp
 
-${OBJECTDIR}/Graph.o: Graph.cpp 
+${OBJECTDIR}/Graph.o: Graph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Graph.o Graph.cpp
 
-${OBJECTDIR}/NautyLink.o: NautyLink.cpp 
+${OBJECTDIR}/NautyLink.o: NautyLink.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NautyLink.o NautyLink.cpp
 
-${OBJECTDIR}/RandESU.o: RandESU.cpp 
+${OBJECTDIR}/RandESU.o: RandESU.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandESU.o RandESU.cpp
 
-${OBJECTDIR}/RandomGraphAnalysis.o: RandomGraphAnalysis.cpp 
+${OBJECTDIR}/RandomGraphAnalysis.o: RandomGraphAnalysis.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphAnalysis.o RandomGraphAnalysis.cpp
 
-${OBJECTDIR}/RandomGraphGenerator.o: RandomGraphGenerator.cpp 
+${OBJECTDIR}/RandomGraphGenerator.o: RandomGraphGenerator.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphGenerator.o RandomGraphGenerator.cpp
 
-${OBJECTDIR}/StatisticalAnalysis.o: StatisticalAnalysis.cpp 
+${OBJECTDIR}/StatisticalAnalysis.o: StatisticalAnalysis.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StatisticalAnalysis.o StatisticalAnalysis.cpp
 
-${OBJECTDIR}/Subgraph.o: Subgraph.cpp 
+${OBJECTDIR}/Subgraph.o: Subgraph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Subgraph.o Subgraph.cpp
 
-${OBJECTDIR}/SubgraphCount.o: SubgraphCount.cpp 
+${OBJECTDIR}/SubgraphCount.o: SubgraphCount.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphCount.o SubgraphCount.cpp
 
-${OBJECTDIR}/SubgraphProfile.o: SubgraphProfile.cpp 
+${OBJECTDIR}/SubgraphProfile.o: SubgraphProfile.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphProfile.o SubgraphProfile.cpp
 
-${OBJECTDIR}/nauty/gtools.o: nauty/gtools.c 
+${OBJECTDIR}/nauty/gtools.o: nauty/gtools.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/gtools.o nauty/gtools.c
 
-${OBJECTDIR}/nauty/naugraph.o: nauty/naugraph.c 
+${OBJECTDIR}/nauty/naugraph.o: nauty/naugraph.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/naugraph.o nauty/naugraph.c
 
-${OBJECTDIR}/nauty/naurng.o: nauty/naurng.c 
+${OBJECTDIR}/nauty/naurng.o: nauty/naurng.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/naurng.o nauty/naurng.c
 
-${OBJECTDIR}/nauty/nausparse.o: nauty/nausparse.c 
+${OBJECTDIR}/nauty/nausparse.o: nauty/nausparse.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nausparse.o nauty/nausparse.c
 
-${OBJECTDIR}/nauty/nautil.o: nauty/nautil.c 
+${OBJECTDIR}/nauty/nautil.o: nauty/nautil.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nautil.o nauty/nautil.c
 
-${OBJECTDIR}/nauty/nautinv.o: nauty/nautinv.c 
+${OBJECTDIR}/nauty/nautinv.o: nauty/nautinv.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nautinv.o nauty/nautinv.c
 
-${OBJECTDIR}/nauty/naututil.o: nauty/naututil.c 
+${OBJECTDIR}/nauty/naututil.o: nauty/naututil.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/naututil.o nauty/naututil.c
 
-${OBJECTDIR}/nauty/nauty.o: nauty/nauty.c 
+${OBJECTDIR}/nauty/nauty.o: nauty/nauty.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nauty.o nauty/nauty.c
 
-${OBJECTDIR}/nauty/schreier.o: nauty/schreier.c 
+${OBJECTDIR}/nauty/schreier.o: nauty/schreier.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/schreier.o nauty/schreier.c
 
-${OBJECTDIR}/nauty/sorttemplates.o: nauty/sorttemplates.c 
+${OBJECTDIR}/nauty/sorttemplates.o: nauty/sorttemplates.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/sorttemplates.o nauty/sorttemplates.c
@@ -202,7 +202,7 @@ ${OBJECTDIR}/nauty/sorttemplates.o: nauty/sorttemplates.c
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newsimpletest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
 
 
 ${TESTDIR}/tests/newsimpletest.o: tests/newsimpletest.cpp 
@@ -483,7 +483,6 @@ ${OBJECTDIR}/nauty/sorttemplates_nomain.o: ${OBJECTDIR}/nauty/sorttemplates.o na
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnemostaticlib.a
 
 # Subprojects
 .clean-subprojects:

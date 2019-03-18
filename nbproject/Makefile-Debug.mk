@@ -71,8 +71,8 @@ TESTOBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-std=c++11
-CXXFLAGS=-std=c++11
+CCFLAGS=
+CXXFLAGS=
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -93,102 +93,102 @@ ${CND_DISTDIR}/libnemostaticlib.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/libnemostaticlib.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/libnemostaticlib.a
 
-${OBJECTDIR}/ESU.o: ESU.cpp 
+${OBJECTDIR}/ESU.o: ESU.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ESU.o ESU.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ESU.o ESU.cpp
 
-${OBJECTDIR}/Graph.o: Graph.cpp 
+${OBJECTDIR}/Graph.o: Graph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Graph.o Graph.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Graph.o Graph.cpp
 
-${OBJECTDIR}/NautyLink.o: NautyLink.cpp 
+${OBJECTDIR}/NautyLink.o: NautyLink.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NautyLink.o NautyLink.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NautyLink.o NautyLink.cpp
 
-${OBJECTDIR}/RandESU.o: RandESU.cpp 
+${OBJECTDIR}/RandESU.o: RandESU.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandESU.o RandESU.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandESU.o RandESU.cpp
 
-${OBJECTDIR}/RandomGraphAnalysis.o: RandomGraphAnalysis.cpp 
+${OBJECTDIR}/RandomGraphAnalysis.o: RandomGraphAnalysis.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphAnalysis.o RandomGraphAnalysis.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphAnalysis.o RandomGraphAnalysis.cpp
 
-${OBJECTDIR}/RandomGraphGenerator.o: RandomGraphGenerator.cpp 
+${OBJECTDIR}/RandomGraphGenerator.o: RandomGraphGenerator.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphGenerator.o RandomGraphGenerator.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphGenerator.o RandomGraphGenerator.cpp
 
-${OBJECTDIR}/StatisticalAnalysis.o: StatisticalAnalysis.cpp 
+${OBJECTDIR}/StatisticalAnalysis.o: StatisticalAnalysis.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StatisticalAnalysis.o StatisticalAnalysis.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StatisticalAnalysis.o StatisticalAnalysis.cpp
 
-${OBJECTDIR}/Subgraph.o: Subgraph.cpp 
+${OBJECTDIR}/Subgraph.o: Subgraph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Subgraph.o Subgraph.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Subgraph.o Subgraph.cpp
 
-${OBJECTDIR}/SubgraphCount.o: SubgraphCount.cpp 
+${OBJECTDIR}/SubgraphCount.o: SubgraphCount.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphCount.o SubgraphCount.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphCount.o SubgraphCount.cpp
 
-${OBJECTDIR}/SubgraphProfile.o: SubgraphProfile.cpp 
+${OBJECTDIR}/SubgraphProfile.o: SubgraphProfile.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphProfile.o SubgraphProfile.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphProfile.o SubgraphProfile.cpp
 
-${OBJECTDIR}/nauty/gtools.o: nauty/gtools.c 
+${OBJECTDIR}/nauty/gtools.o: nauty/gtools.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/gtools.o nauty/gtools.c
 
-${OBJECTDIR}/nauty/naugraph.o: nauty/naugraph.c 
+${OBJECTDIR}/nauty/naugraph.o: nauty/naugraph.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/naugraph.o nauty/naugraph.c
 
-${OBJECTDIR}/nauty/naurng.o: nauty/naurng.c 
+${OBJECTDIR}/nauty/naurng.o: nauty/naurng.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/naurng.o nauty/naurng.c
 
-${OBJECTDIR}/nauty/nausparse.o: nauty/nausparse.c 
+${OBJECTDIR}/nauty/nausparse.o: nauty/nausparse.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nausparse.o nauty/nausparse.c
 
-${OBJECTDIR}/nauty/nautil.o: nauty/nautil.c 
+${OBJECTDIR}/nauty/nautil.o: nauty/nautil.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nautil.o nauty/nautil.c
 
-${OBJECTDIR}/nauty/nautinv.o: nauty/nautinv.c 
+${OBJECTDIR}/nauty/nautinv.o: nauty/nautinv.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nautinv.o nauty/nautinv.c
 
-${OBJECTDIR}/nauty/naututil.o: nauty/naututil.c 
+${OBJECTDIR}/nauty/naututil.o: nauty/naututil.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/naututil.o nauty/naututil.c
 
-${OBJECTDIR}/nauty/nauty.o: nauty/nauty.c 
+${OBJECTDIR}/nauty/nauty.o: nauty/nauty.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/nauty.o nauty/nauty.c
 
-${OBJECTDIR}/nauty/schreier.o: nauty/schreier.c 
+${OBJECTDIR}/nauty/schreier.o: nauty/schreier.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/schreier.o nauty/schreier.c
 
-${OBJECTDIR}/nauty/sorttemplates.o: nauty/sorttemplates.c 
+${OBJECTDIR}/nauty/sorttemplates.o: nauty/sorttemplates.c
 	${MKDIR} -p ${OBJECTDIR}/nauty
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nauty/sorttemplates.o nauty/sorttemplates.c
@@ -202,13 +202,13 @@ ${OBJECTDIR}/nauty/sorttemplates.o: nauty/sorttemplates.c
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newsimpletest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
 
 
 ${TESTDIR}/tests/newsimpletest.o: tests/newsimpletest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newsimpletest.o tests/newsimpletest.cpp
+	$(COMPILE.cc) -g -I. -std=c++14 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newsimpletest.o tests/newsimpletest.cpp
 
 
 ${OBJECTDIR}/ESU_nomain.o: ${OBJECTDIR}/ESU.o ESU.cpp 
@@ -219,7 +219,7 @@ ${OBJECTDIR}/ESU_nomain.o: ${OBJECTDIR}/ESU.o ESU.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ESU_nomain.o ESU.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ESU_nomain.o ESU.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ESU.o ${OBJECTDIR}/ESU_nomain.o;\
 	fi
@@ -232,7 +232,7 @@ ${OBJECTDIR}/Graph_nomain.o: ${OBJECTDIR}/Graph.o Graph.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Graph_nomain.o Graph.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Graph_nomain.o Graph.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Graph.o ${OBJECTDIR}/Graph_nomain.o;\
 	fi
@@ -245,7 +245,7 @@ ${OBJECTDIR}/NautyLink_nomain.o: ${OBJECTDIR}/NautyLink.o NautyLink.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NautyLink_nomain.o NautyLink.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NautyLink_nomain.o NautyLink.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/NautyLink.o ${OBJECTDIR}/NautyLink_nomain.o;\
 	fi
@@ -258,7 +258,7 @@ ${OBJECTDIR}/RandESU_nomain.o: ${OBJECTDIR}/RandESU.o RandESU.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandESU_nomain.o RandESU.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandESU_nomain.o RandESU.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/RandESU.o ${OBJECTDIR}/RandESU_nomain.o;\
 	fi
@@ -271,7 +271,7 @@ ${OBJECTDIR}/RandomGraphAnalysis_nomain.o: ${OBJECTDIR}/RandomGraphAnalysis.o Ra
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphAnalysis_nomain.o RandomGraphAnalysis.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphAnalysis_nomain.o RandomGraphAnalysis.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/RandomGraphAnalysis.o ${OBJECTDIR}/RandomGraphAnalysis_nomain.o;\
 	fi
@@ -284,7 +284,7 @@ ${OBJECTDIR}/RandomGraphGenerator_nomain.o: ${OBJECTDIR}/RandomGraphGenerator.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphGenerator_nomain.o RandomGraphGenerator.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RandomGraphGenerator_nomain.o RandomGraphGenerator.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/RandomGraphGenerator.o ${OBJECTDIR}/RandomGraphGenerator_nomain.o;\
 	fi
@@ -297,7 +297,7 @@ ${OBJECTDIR}/StatisticalAnalysis_nomain.o: ${OBJECTDIR}/StatisticalAnalysis.o St
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StatisticalAnalysis_nomain.o StatisticalAnalysis.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StatisticalAnalysis_nomain.o StatisticalAnalysis.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StatisticalAnalysis.o ${OBJECTDIR}/StatisticalAnalysis_nomain.o;\
 	fi
@@ -310,7 +310,7 @@ ${OBJECTDIR}/Subgraph_nomain.o: ${OBJECTDIR}/Subgraph.o Subgraph.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Subgraph_nomain.o Subgraph.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Subgraph_nomain.o Subgraph.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Subgraph.o ${OBJECTDIR}/Subgraph_nomain.o;\
 	fi
@@ -323,7 +323,7 @@ ${OBJECTDIR}/SubgraphCount_nomain.o: ${OBJECTDIR}/SubgraphCount.o SubgraphCount.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphCount_nomain.o SubgraphCount.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphCount_nomain.o SubgraphCount.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/SubgraphCount.o ${OBJECTDIR}/SubgraphCount_nomain.o;\
 	fi
@@ -336,7 +336,7 @@ ${OBJECTDIR}/SubgraphProfile_nomain.o: ${OBJECTDIR}/SubgraphProfile.o SubgraphPr
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphProfile_nomain.o SubgraphProfile.cpp;\
+	    $(COMPILE.cc) -g -std=c++14 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SubgraphProfile_nomain.o SubgraphProfile.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/SubgraphProfile.o ${OBJECTDIR}/SubgraphProfile_nomain.o;\
 	fi
@@ -483,7 +483,6 @@ ${OBJECTDIR}/nauty/sorttemplates_nomain.o: ${OBJECTDIR}/nauty/sorttemplates.o na
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/libnemostaticlib.a
 
 # Subprojects
 .clean-subprojects:
