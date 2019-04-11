@@ -1,6 +1,15 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
-
+//------------------------------------------- HASH_MAP.h ---------------------------------------------------------------
+// Author: Adam Sirkis
+// Creation: 03-09-2019
+// Modified: 04-11-2019
+//----------------------------------------------------------------------------------------------------------------------
+// Purpose: structure to represent an optimized closed-hashing hashing table. 
+//		Stores exactly one of each key
+//		Not Currently C++20 Compliant
+//
+//----------------------------------------------------------------------------------------------------------------------
 #if defined(__has_include)
 #if __has_include(<functional>)
 #include <functional>
